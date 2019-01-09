@@ -7,3 +7,5 @@
 build/
 
 .flutter-plugins
+
+res/config.json
