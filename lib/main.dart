@@ -6,10 +6,12 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/sign_up.dart';
 import 'package:leapfrog/email_sign_in.dart';
+import 'package:leapfrog/api.dart';
 
 void main() => runApp(new LeapfrogApp());
 
 final config = new Config();
+final api = new Api();
 
 class LeapfrogApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -33,12 +35,37 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _ready = false;
+  GlobalKey<ScaffoldState> _scaffold = new GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    config.init().then((result) {
+      setState(() {
+        _ready = true;
+      });
+    });
+  }
 
   void _googleSignIn() async {
     GoogleSignIn _googleSignIn = new GoogleSignIn(
       scopes: ['email']
     );
     GoogleSignInAccount user = await _googleSignIn.signIn();
+    if (await api.userExists(user.email)) {
+      print('User exists');
+    }
+    else {
+      bool created = await api.registerUser(user.email, user.displayName);
+      if (created) {
+        //cache login
+        print('User created');
+      }
+      else {
+        _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Registration failed.")));
+      }
+    }
   }
 
   void _facebookSignIn() async {
@@ -62,22 +89,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    config.init().then((result) {
-      setState(() {
-        _ready = true;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (!_ready) {
       return new Scaffold();
     }
 
     return new Scaffold(
+      key: _scaffold,
       body: new Container(
         decoration: new BoxDecoration(color: new Color(int.parse(config.getValue("primary_color"), radix: 16))),
         child: new Center(

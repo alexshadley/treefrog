@@ -2,5 +2,6 @@
   "app_name": "Leapfrog",
   "primary_color": "FF55efc4",
   "form_button_background": "FFFFFFFF",
-  "form_submit_margin": 20.0
+  "form_submit_margin": 20.0,
+  "api_url": "http://127.0.0.1:5000"
 }
