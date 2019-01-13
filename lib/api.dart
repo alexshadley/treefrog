@@ -1,8 +1,10 @@
-import 'config.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'util.dart' as util;
 import 'dart:convert' as convert;
+
+import 'package:http/http.dart' as http;
+
+import 'config.dart';
+import 'util.dart' as util;
 
 class Api {
   final _config = new Config();
@@ -15,10 +17,11 @@ class Api {
     }
 
     try {
-      await http.read("${_config.getValue("api_url")}/users/$email");
-      return true;
+      http.Response response = await http.get("${_config.getValue("api_url")}/users/$email");
+      return response.statusCode == 200;
     }
-    catch (Exception) {
+    catch (ex) {
+      print(ex);
       return false;
     }
   }
@@ -53,7 +56,8 @@ class Api {
 
       return response.statusCode == 201;
     }
-    catch (Exception) {
+    catch (ex) {
+      print(ex.toString());
       return false;
     }
   }
