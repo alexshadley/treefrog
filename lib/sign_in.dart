@@ -27,20 +27,25 @@ class SignIn {
 
   /// Calls Google's OAuth flow to sign in.
   Future<SignInResult> googleSignIn() async {
-    if(!_ready)
+    if(!_ready) {
       await _config.init();
+      _ready = true;
+    }
 
     var _googleSignIn = new GoogleSignIn(
         scopes: ['email']
     );
     var user = await _googleSignIn.signIn();
-    return await _loginWithApi(user.email, user.displayName, "Google", true);
+    var resultType = await _loginWithApi(user.email, user.displayName, "Google", true);
+    return new SignInResult(resultType, user.email);
   }
 
   /// Calls Facebook's OAuth flow to sign in.
   Future<SignInResult> facebookSignIn() async {
-    if (!_ready)
+    if (!_ready) {
       await _config.init();
+      _ready = true;
+    }
 
     var result = await new FacebookLogin().logInWithReadPermissions(['email']);
 
@@ -50,27 +55,53 @@ class SignIn {
               .userId}?fields=name,email&access_token=${result.accessToken
               .token}");
       var data = convert.jsonDecode(response.body);
-      return await _loginWithApi(data['email'], data['name'], "Facebook", true);
+      var resultType = await _loginWithApi(data['email'], data['name'], "Facebook", true);
+      return new SignInResult(resultType, data['email']);
     }
     else {
-      return SignInResult.FAILURE;
+      return new SignInResult(ResultType.FAILURE, "");
     }
   }
 
   /// Signs in with an [email] and [password].
   Future<SignInResult> emailSignIn(String email, String password) async {
-    return await _loginWithApi(email, null, "Email", false, password);
+    var resultType = await _loginWithApi(email, null, "Email", false, password);
+    return new SignInResult(resultType, email);
+  }
+
+  /// Checks whether a login is currently cached.
+  /// This will return the user's email if a user has signed in more recently
+  /// than the millisecond value of `login_timeout` in config.json.
+  /// Otherwise, it will return an empty string.
+  Future<String> checkCache() async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+
+    var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
+
+    if (await file.exists()) {
+      file.open();
+      var contents = convert.jsonDecode(await file.readAsString());
+      if (new DateTime.now().millisecondsSinceEpoch - contents["time"] < int.parse(_config.getValue('login_timeout')))
+        return contents["email"];
+    }
+    return "";
   }
 
   /// Saves a login to persistent storage. This allows the user to enter the
   /// app the next time without signing in again.
-  /// Note that [password] doesn't matter if the user didn't sign in with
-  /// the `Email` method.
-  void _cacheLogin(String email, String password) async {
+  void _cacheLogin(String email) async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+
     var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
     await file.create(recursive: true);
 
-    var contents = { "email": email, "password": password, "time": new DateTime.now().millisecondsSinceEpoch };
+    var contents = { "email": email, "time": new DateTime.now().millisecondsSinceEpoch };
 
     file.writeAsString(convert.jsonEncode(contents));
   }
@@ -78,8 +109,8 @@ class SignIn {
   /// Calls the API to sign the user in. [tryRegister] indicates whether it should
   /// try to register the user in the event that no user exists with [email].
   ///
-  /// See [SignInResult] for documentation on the return values.
-  Future<SignInResult> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
+  /// See [ResultType] for documentation on the return values.
+  Future<ResultType> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
     if (password == null)
       password = "";
     else
@@ -88,27 +119,27 @@ class SignIn {
     var user = await _api.getUser(email);
 
     if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
-      _cacheLogin(email, "");
-      return SignInResult.SUCCESS;
+      _cacheLogin(email);
+      return ResultType.SUCCESS;
     }
     else if (user != null && method.toUpperCase() != signInMethod.name(user.method)) {
-      return SignInResult.INCORRECT_METHOD;
+      return ResultType.INCORRECT_METHOD;
     }
     else if (user != null) {
-      return SignInResult.INCORRECT_PASSWORD;
+      return ResultType.INCORRECT_PASSWORD;
     }
     else if (tryRegister) {
       var result = await _api.registerUser(email, displayName, method, password);
       if (result == RegistrationResult.SUCCESS) {
-        _cacheLogin(email, "");
-        return SignInResult.SUCCESS;
+        _cacheLogin(email);
+        return ResultType.SUCCESS;
       }
       else {
-        return SignInResult.FAILURE;
+        return ResultType.FAILURE;
       }
     }
     else {
-      return SignInResult.NONEXISTENT_USER;
+      return ResultType.NONEXISTENT_USER;
     }
   }
 }

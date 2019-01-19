@@ -155,10 +155,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           _api.registerUser(_emailController.text, "${_firstNameController.text} ${_lastNameController.text}", "Email", _passwordController.text)
                           .then((result){
                             setState(() {
-                              if (result == RegistrationResult.SUCCESS) {
-                                Navigator.push(context, new MaterialPageRoute(builder: (builder) => new PlaceholderPage()));
+                              if (result.resultType == RegistrationResult.SUCCESS) {
+                                Navigator.push(context, new MaterialPageRoute(builder: (builder) => new PlaceholderPage(result.email)));
                               }
-                              else if (result == RegistrationResult.DUPLICATE_EMAIL) {
+                              else if (result.resultType == RegistrationResult.DUPLICATE_EMAIL) {
                                 setState(() {
                                   _uniquenessError = "Email already belongs to an account";
                                 });

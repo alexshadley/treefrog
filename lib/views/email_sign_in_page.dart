@@ -97,11 +97,11 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
                         if (_formKey.currentState.validate()) {
                           _signIn.emailSignIn(_emailController.text, _passwordController.text)
                           .then((result) {
-                            if (result == SignInResult.SUCCESS)
-                              Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage()));
-                            else if (result == SignInResult.NONEXISTENT_USER || result == SignInResult.INCORRECT_PASSWORD)
+                            if (result.resultType == ResultType.SUCCESS)
+                              Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage(result.email)));
+                            else if (result.resultType == ResultType.NONEXISTENT_USER || result.resultType == ResultType.INCORRECT_PASSWORD)
                               _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Email or password was incorrect.")));
-                            else if (result == SignInResult.INCORRECT_METHOD)
+                            else if (result.resultType == ResultType.INCORRECT_METHOD)
                               _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Email already exists with a different sign-in method.")));
                             else
                               _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Sign-in failed.")));

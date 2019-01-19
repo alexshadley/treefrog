@@ -28,6 +28,11 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void initState() {
     super.initState();
+    _signIn.checkCache()
+    .then((email) {
+       if (email.isNotEmpty)
+         Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage(email)));
+    });
 
     _config.init().then((result) {
       setState(() {
@@ -40,14 +45,14 @@ class _SignInPageState extends State<SignInPage> {
   Function() _oauthSignIn(OAuthLoginMethod method) {
     return (){
       method().then((result) {
-        if (result == SignInResult.INCORRECT_METHOD) {
+        if (result.resultType == ResultType.INCORRECT_METHOD) {
           _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Email was originally registered with a different sign-in method.")));
         }
-        else if (result == SignInResult.FAILURE) {
+        else if (result.resultType == ResultType.FAILURE) {
           _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Registration failed.")));
         }
         else {
-          Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage()));
+          Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage(result.email)));
         }
       });
     };

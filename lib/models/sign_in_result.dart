@@ -1,5 +1,5 @@
 /// Possible results of a user sign-in.
-enum SignInResult {
+enum ResultType {
   /// The user is allowed to sign in.
   /// This indicates that:
   /// * The user exists
@@ -21,4 +21,13 @@ enum SignInResult {
 
   /// The sign-in attempt failed for an unknown reason.
   FAILURE
+}
+
+class SignInResult {
+  final resultType;
+  final email;
+
+  SignInResult(ResultType resultType, String email) :
+    this.resultType = resultType,
+    this.email = email;
 }
