@@ -13,7 +13,11 @@ bool isValidPassword(String password) {
 
 String hash(String password) {
   var bytes = utf8.encode(password);
-  var digest = sha256.convert(bytes);
+  var digest = sha1.convert(bytes);
 
-  return utf8.decode(digest.bytes);
+  String result = "";
+  for (int b in digest.bytes) {
+    result += b.toRadixString(16);
+  }
+  return result;
 }

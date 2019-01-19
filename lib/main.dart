@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-import 'package:leapfrog/config.dart';
-import 'package:leapfrog/sign_up.dart';
-import 'package:leapfrog/email_sign_in.dart';
-import 'package:leapfrog/api.dart';
+import 'config.dart';
+import 'email_sign_up.dart';
+import 'email_sign_in.dart';
+import 'placeholder.dart';
+import 'signin_result.dart';
 import 'sign_in.dart';
 
 void main() => runApp(new LeapfrogApp());
@@ -50,8 +51,14 @@ class _LoginPageState extends State<LoginPage> {
   Function() _oauthSignIn(LoginMethod method) {
     return (){
       method().then((result) {
-        if (!result) {
+        if (result == SignInResult.INCORRECT_METHOD) {
+          _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Email was originally registered with a different sign-in method.")));
+        }
+        else if (result == SignInResult.FAILURE) {
           _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Registration failed.")));
+        }
+        else {
+          Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage()));
         }
       });
     };
