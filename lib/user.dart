@@ -1,5 +1,6 @@
 import 'package:leapfrog/models/sign_in_method.dart';
 
+/// Represents a user in the backend database.
 class User {
   var email;
   var displayName;

@@ -8,20 +8,23 @@ import 'package:leapfrog/views/placeholder_page.dart';
 import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/sign_in.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage();
-
+/// The main sign-in page, where the user can select a sign-in method.
+class SignInPage extends StatefulWidget {
+  /// Creates the state of the sign-in page.
   @override
-  _LoginPageState createState() => new _LoginPageState();
+  _SignInPageState createState() => new _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+/// The state of the sign-in page.
+class _SignInPageState extends State<SignInPage> {
   final _config = new Config();
   final _signIn = new SignIn();
   final _scaffold = new GlobalKey<ScaffoldState>();
 
+  /// Indicates whether `init()` has been called on [_config].
   var _ready = false;
 
+  /// Initializes the sign-in page state.
   @override
   void initState() {
     super.initState();
@@ -33,7 +36,8 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  Function() _oauthSignIn(LoginMethod method) {
+  /// Gets a function that can be called to sign in with the given [OAuthLoginMethod].
+  Function() _oauthSignIn(OAuthLoginMethod method) {
     return (){
       method().then((result) {
         if (result == SignInResult.INCORRECT_METHOD) {
@@ -49,14 +53,17 @@ class _LoginPageState extends State<LoginPage> {
     };
   }
 
+  /// Opens the email sign-in page.
   void _emailSignIn() {
     Navigator.push(context, new MaterialPageRoute(builder: (context) => new EmailSignInPage(_config)));
   }
 
+  /// Opens the email sign-up page.
   void _emailSignUp() {
     Navigator.push(context, new MaterialPageRoute(builder: (context) => new SignUpPage(_config)));
   }
 
+  /// Builds the sign-in page [Widget].
   @override
   Widget build(BuildContext context) {
     if (!_ready)

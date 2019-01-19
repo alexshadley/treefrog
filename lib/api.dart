@@ -8,11 +8,14 @@ import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
+/// Interfaces with the app's backend API.
 class Api {
   final _config = new Config();
 
   var _ready = false;
 
+  /// Gets a user from the API. This returns a [User] if a user exists with the
+  /// given [email]; otherwise, it returns `null`.
   Future<User> getUser(String email) async {
     if (!_ready) {
       await _config.init();
@@ -29,6 +32,10 @@ class Api {
     }
   }
 
+  /// Creates a user in the backend database. [password] should only be used if
+  /// the user is being created using the `Email` sign-in method.
+  /// This will return the appropriate [RegistrationResult] for the situation
+  /// encountered.
   Future<RegistrationResult> registerUser(String email, String displayName, String method, [String password]) async {
     if (!_ready) {
       await _config.init();

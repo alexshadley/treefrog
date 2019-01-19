@@ -14,14 +14,18 @@ import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
 import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/util.dart' as util;
 
-typedef Future<SignInResult> LoginMethod();
+/// A type corresponding to any function that performs OAuth login.
+typedef Future<SignInResult> OAuthLoginMethod();
 
+/// Performs various tasks related to signing a user into the app.
 class SignIn {
-  final Api api = new Api();
-  final Config _config = new Config();
+  final _api = new Api();
+  final _config = new Config();
 
+  /// Indicates whether `init()` has been called on [_config].
   var _ready = false;
 
+  /// Calls Google's OAuth flow to sign in.
   Future<SignInResult> googleSignIn() async {
     if(!_ready)
       await _config.init();
@@ -33,6 +37,7 @@ class SignIn {
     return await _loginWithApi(user.email, user.displayName, "Google", true);
   }
 
+  /// Calls Facebook's OAuth flow to sign in.
   Future<SignInResult> facebookSignIn() async {
     if (!_ready)
       await _config.init();
@@ -52,10 +57,15 @@ class SignIn {
     }
   }
 
+  /// Signs in with an [email] and [password].
   Future<SignInResult> emailSignIn(String email, String password) async {
     return await _loginWithApi(email, null, "Email", false, password);
   }
 
+  /// Saves a login to persistent storage. This allows the user to enter the
+  /// app the next time without signing in again.
+  /// Note that [password] doesn't matter if the user didn't sign in with
+  /// the `Email` method.
   void _cacheLogin(String email, String password) async {
     var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
     await file.create(recursive: true);
@@ -65,13 +75,17 @@ class SignIn {
     file.writeAsString(convert.jsonEncode(contents));
   }
 
+  /// Calls the API to sign the user in. [tryRegister] indicates whether it should
+  /// try to register the user in the event that no user exists with [email].
+  ///
+  /// See [SignInResult] for documentation on the return values.
   Future<SignInResult> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
     if (password == null)
       password = "";
     else
       password = util.hash(password);
 
-    var user = await api.getUser(email);
+    var user = await _api.getUser(email);
 
     if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
       _cacheLogin(email, "");
@@ -84,7 +98,7 @@ class SignIn {
       return SignInResult.INCORRECT_PASSWORD;
     }
     else if (tryRegister) {
-      var result = await api.registerUser(email, displayName, method, password);
+      var result = await _api.registerUser(email, displayName, method, password);
       if (result == RegistrationResult.SUCCESS) {
         _cacheLogin(email, "");
         return SignInResult.SUCCESS;

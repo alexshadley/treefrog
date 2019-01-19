@@ -6,15 +6,20 @@ import 'package:leapfrog/views/placeholder_page.dart';
 import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/util.dart';
 
+/// A page where the user can sign up using an email and password.
 class SignUpPage extends StatefulWidget {
   final Config _config;
 
+  /// Initializes the sign up page.
+  /// [config] **must** have had its `init()` method called prior to this.
   SignUpPage(Config config) : _config = config;
 
+  /// Creates the page state.
   @override
   _SignUpPageState createState() => new _SignUpPageState(_config);
 }
 
+/// The state of the sign up page.
 class _SignUpPageState extends State<SignUpPage> {
   final _config;
   final _api;
@@ -27,10 +32,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
   var _uniquenessError = "";
 
+  /// Initializes the page state.
+  /// [config] **must** have had its `init()` method called prior to this.
   _SignUpPageState(Config config) :
     _config = config,
     _api = new Api();
 
+  /// Initializes the page state.
   @override
   void initState() {
     super.initState();
@@ -42,6 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
     });
   }
 
+  /// Disposes the text input controllers.
   @override
   void dispose() {
     super.dispose();
@@ -51,6 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
     _passwordController.dispose();
   }
 
+  /// Builds the page [Widget].
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:leapfrog/views/sign_in_page.dart';
 
+/// The main entry point of the app.
 void main() => runApp(new LeapfrogApp());
 
 class LeapfrogApp extends StatelessWidget {
@@ -13,7 +14,7 @@ class LeapfrogApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new LoginPage(),
+      home: new SignInPage(),
     );
   }
 }

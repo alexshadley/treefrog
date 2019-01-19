@@ -8,15 +8,20 @@ import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/util.dart';
 
+/// A page allowing the user to sign in using an email and password.
 class EmailSignInPage extends StatefulWidget {
   final Config _config;
 
+  /// Initializes the page.
+  /// [config] **must** have had its `init()` method called prior to this.
   EmailSignInPage(Config config) : _config = config;
 
+  /// Creates the page state.
   @override
   _EmailSignInPageState createState() => new _EmailSignInPageState(_config);
 }
 
+/// The state of the email sign-in page.
 class _EmailSignInPageState extends State<EmailSignInPage> {
   final _config;
   final _signIn;
@@ -25,10 +30,13 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
 
+  /// Initializes the state.
+  /// [config] **must** have had its `init()` method called prior to this.
   _EmailSignInPageState(Config config) :
     _config = config,
     _signIn = new SignIn();
 
+  /// Deletes the text input controllers.
   @override
   void dispose() {
     super.dispose();
@@ -37,6 +45,7 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
     _passwordController.dispose();
   }
 
+  /// Builds the page [Widget].
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
