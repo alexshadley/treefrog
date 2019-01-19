@@ -7,29 +7,29 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'api.dart';
-import 'config.dart';
-import 'registration_result.dart';
-import 'signin_method.dart' as signInMethod;
-import 'signin_result.dart';
-import 'user.dart';
-import 'util.dart' as util;
+import 'package:leapfrog/api.dart';
+import 'package:leapfrog/config.dart';
+import 'package:leapfrog/models/registration_result.dart';
+import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
+import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/util.dart' as util;
 
 typedef Future<SignInResult> LoginMethod();
 
 class SignIn {
   final Api api = new Api();
   final Config _config = new Config();
-  bool _ready = false;
+
+  var _ready = false;
 
   Future<SignInResult> googleSignIn() async {
     if(!_ready)
       await _config.init();
 
-    GoogleSignIn _googleSignIn = new GoogleSignIn(
+    var _googleSignIn = new GoogleSignIn(
         scopes: ['email']
     );
-    GoogleSignInAccount user = await _googleSignIn.signIn();
+    var user = await _googleSignIn.signIn();
     return await _loginWithApi(user.email, user.displayName, "Google", true);
   }
 
@@ -40,11 +40,11 @@ class SignIn {
     var result = await new FacebookLogin().logInWithReadPermissions(['email']);
 
     if (result.status == FacebookLoginStatus.loggedIn) {
-      http.Response response = await http.get(
+      var response = await http.get(
           "${_config.getValue("facebook_url")}/${result.accessToken
               .userId}?fields=name,email&access_token=${result.accessToken
               .token}");
-      Map data = convert.jsonDecode(response.body);
+      var data = convert.jsonDecode(response.body);
       return await _loginWithApi(data['email'], data['name'], "Facebook", true);
     }
     else {
@@ -57,7 +57,7 @@ class SignIn {
   }
 
   void _cacheLogin(String email, String password) async {
-    File file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
+    var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
     await file.create(recursive: true);
 
     var contents = { "email": email, "password": password, "time": new DateTime.now().millisecondsSinceEpoch };
@@ -71,21 +71,20 @@ class SignIn {
     else
       password = util.hash(password);
 
-    User user = await api.getUser(email);
+    var user = await api.getUser(email);
 
     if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
       _cacheLogin(email, "");
       return SignInResult.SUCCESS;
     }
-    else if (user != null && method.toUpperCase() != signInMethod.name(user.method))
+    else if (user != null && method.toUpperCase() != signInMethod.name(user.method)) {
       return SignInResult.INCORRECT_METHOD;
+    }
     else if (user != null) {
-      print(password);
-      print(user.passwordHash);
       return SignInResult.INCORRECT_PASSWORD;
     }
     else if (tryRegister) {
-      RegistrationResult result = await api.registerUser(email, displayName, method, password);
+      var result = await api.registerUser(email, displayName, method, password);
       if (result == RegistrationResult.SUCCESS) {
         _cacheLogin(email, "");
         return SignInResult.SUCCESS;
@@ -94,7 +93,8 @@ class SignIn {
         return SignInResult.FAILURE;
       }
     }
-    else
+    else {
       return SignInResult.NONEXISTENT_USER;
+    }
   }
 }

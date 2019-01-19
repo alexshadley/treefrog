@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'api.dart';
-import 'config.dart';
-import 'placeholder.dart';
-import 'registration_result.dart';
-import 'util.dart';
+import 'package:leapfrog/api.dart';
+import 'package:leapfrog/config.dart';
+import 'package:leapfrog/views/placeholder_page.dart';
+import 'package:leapfrog/models/registration_result.dart';
+import 'package:leapfrog/util.dart';
 
 class SignUpPage extends StatefulWidget {
-  Config _config;
+  final Config _config;
 
-  SignUpPage(Config config) {
-    this._config = config;
-  }
+  SignUpPage(Config config) : _config = config;
 
   @override
   _SignUpPageState createState() => new _SignUpPageState(_config);
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  Config _config;
-  Api _api;
-
+  final _config;
+  final _api;
   final _scaffold = new GlobalKey<ScaffoldState>();
   final _formKey = new GlobalKey<FormState>();
   final _firstNameController = new TextEditingController();
@@ -28,15 +25,16 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
 
-  String _uniquenessError = "";
+  var _uniquenessError = "";
 
-  _SignUpPageState(Config config) {
-    this._config = config;
-    this._api = new Api();
-  }
+  _SignUpPageState(Config config) :
+    _config = config,
+    _api = new Api();
 
   @override
   void initState() {
+    super.initState();
+
     _emailController.addListener((){
       setState(() {
         _uniquenessError = "";
@@ -47,6 +45,9 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     super.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
   }
 
@@ -144,12 +145,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           _api.registerUser(_emailController.text, "${_firstNameController.text} ${_lastNameController.text}", "Email", _passwordController.text)
                           .then((result){
                             setState(() {
-                              if (result == RegistrationResult.SUCCESS)
+                              if (result == RegistrationResult.SUCCESS) {
                                 Navigator.push(context, new MaterialPageRoute(builder: (builder) => new PlaceholderPage()));
-                              else if (result == RegistrationResult.DUPLICATE_EMAIL)
+                              }
+                              else if (result == RegistrationResult.DUPLICATE_EMAIL) {
                                 setState(() {
                                   _uniquenessError = "Email already belongs to an account";
                                 });
+                              }
                               else {
                                 setState(() {
                                   _uniquenessError = "";

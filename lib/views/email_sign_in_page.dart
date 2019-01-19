@@ -2,35 +2,39 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 
-import 'config.dart';
-import 'placeholder.dart';
-import 'sign_in.dart';
-import 'signin_result.dart';
-import 'util.dart';
+import 'package:leapfrog/config.dart';
+import 'package:leapfrog/views/placeholder_page.dart';
+import 'package:leapfrog/sign_in.dart';
+import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/util.dart';
 
 class EmailSignInPage extends StatefulWidget {
-  Config _config;
+  final Config _config;
 
-  EmailSignInPage(Config config) {
-    this._config = config;
-  }
+  EmailSignInPage(Config config) : _config = config;
 
   @override
   _EmailSignInPageState createState() => new _EmailSignInPageState(_config);
 }
 
 class _EmailSignInPageState extends State<EmailSignInPage> {
-  Config _config;
-  SignIn _signIn;
-
+  final _config;
+  final _signIn;
   final _scaffold = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
 
-  _EmailSignInPageState(Config config) {
-    this._config = config;
-    this._signIn = new SignIn();
+  _EmailSignInPageState(Config config) :
+    _config = config,
+    _signIn = new SignIn();
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
@@ -38,7 +42,9 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
     return new Scaffold(
       key: _scaffold,
       body: new Container(
-        decoration: new BoxDecoration(color: new Color(int.parse(_config.getValue("primary_color"), radix: 16))),
+        decoration: new BoxDecoration(
+            color: new Color(int.parse(_config.getValue("primary_color"), radix: 16))
+        ),
         child: new Form(
           key: _formKey,
             child: new Center(
