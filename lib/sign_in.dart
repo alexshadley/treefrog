@@ -84,8 +84,10 @@ class SignIn {
     if (await file.exists()) {
       file.open();
       var contents = convert.jsonDecode(await file.readAsString());
-      if (new DateTime.now().millisecondsSinceEpoch - contents["time"] < int.parse(_config.getValue('login_timeout')))
+      if (new DateTime.now().millisecondsSinceEpoch - contents["time"] < int.parse(_config.getValue('login_timeout'))) {
+        _cacheLogin(contents["email"]);
         return contents["email"];
+      }
     }
     return "";
   }
