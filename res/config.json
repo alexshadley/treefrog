@@ -2,5 +2,8 @@
   "app_name": "Leapfrog",
   "primary_color": "FF55efc4",
   "form_button_background": "FFFFFFFF",
-  "form_submit_margin": 20.0
+  "form_submit_margin": 20.0,
+  "api_url": "http://poserrank.com:27027/api",
+  "facebook_url": "https://graph.facebook.com",
+  "login_timeout": "8690400000"
 }
