@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/views/placeholder_page.dart';
+import 'package:leapfrog/views/menu.dart';
 import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/util.dart';
 
@@ -156,7 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           .then((result){
                             setState(() {
                               if (result.resultType == RegistrationResult.SUCCESS) {
-                                Navigator.push(context, new MaterialPageRoute(builder: (builder) => new PlaceholderPage(result.email)));
+                                Navigator.push(context, new MaterialPageRoute(builder: (builder) => new Menu(result.email, _config)));
                               }
                               else if (result.resultType == RegistrationResult.DUPLICATE_EMAIL) {
                                 setState(() {
