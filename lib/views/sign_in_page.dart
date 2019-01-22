@@ -4,7 +4,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/views/email_sign_up_page.dart';
 import 'package:leapfrog/views/email_sign_in_page.dart';
-import 'package:leapfrog/views/placeholder_page.dart';
+import 'package:leapfrog/views/menu.dart';
 import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/sign_in.dart';
 
@@ -31,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
     _signIn.checkCache()
     .then((email) {
        if (email.isNotEmpty)
-         Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage(email)));
+         Navigator.push(context, new MaterialPageRoute(builder: (context) => new Menu(email, _config)));
     });
 
     _config.init().then((result) {
@@ -52,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
           _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Registration failed.")));
         }
         else {
-          Navigator.push(context, new MaterialPageRoute(builder: (context) => new PlaceholderPage(result.email)));
+          Navigator.push(context, new MaterialPageRoute(builder: (context) => new Menu(result.email, _config)));
         }
       });
     };
@@ -90,9 +90,9 @@ class _SignInPageState extends State<SignInPage> {
                   margin: new EdgeInsets.only(top: 80.0),
                   child: new Column(
                       children: <Widget>[
-                        SignInButton(Buttons.GoogleDark, onPressed: _oauthSignIn(_signIn.googleSignIn)),
-                        SignInButton(Buttons.Facebook, onPressed: _oauthSignIn(_signIn.facebookSignIn)),
-                        SignInButton(Buttons.Email, onPressed: _emailSignIn),
+                        new SignInButton(Buttons.GoogleDark, onPressed: _oauthSignIn(_signIn.googleSignIn)),
+                        new SignInButton(Buttons.Facebook, onPressed: _oauthSignIn(_signIn.facebookSignIn)),
+                        new SignInButton(Buttons.Email, onPressed: _emailSignIn),
                         new Container(
                           margin: new EdgeInsets.fromLTRB(0.0, _config.getValue("form_submit_margin"), 0.0, 0.0),
                           child: new RaisedButton(
