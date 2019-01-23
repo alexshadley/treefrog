@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/registration_result.dart';
+import 'package:leapfrog/models/initiation_result.dart';
 import 'package:leapfrog/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
@@ -60,5 +61,24 @@ class Api {
       return RegistrationResult.DUPLICATE_EMAIL;
     else
       return RegistrationResult.FAILURE;
+  }
+
+  /// Creates a user in the backend database. [password] should only be used if
+  /// the user is being created using the `Email` sign-in method.
+  /// This will return the appropriate [RegistrationResult] for the situation
+  /// encountered.
+  Future<InitiationResult> initiateTransfer(String email) async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+
+    var body = {'email': email};
+
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
+    var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
+    var location = {'latitude': responseJson['latitude'], 'longitude': responseJson['longitude']};
+    
+    return InitiationResult(response.statusCode, responseJson['transfer_code'], location);
   }
 }
