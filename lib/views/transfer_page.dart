@@ -1,10 +1,13 @@
 import 'dart:core';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:leapfrog/config.dart';
+import 'package:leapfrog/api.dart';
+import 'package:leapfrog/models/pending_transfer.dart';
+import 'package:leapfrog/views/qr_page.dart';
 
 class TransferPage extends StatefulWidget {
-
   final _email;
   final _config;
 
@@ -19,6 +22,7 @@ class TransferPage extends StatefulWidget {
 
 /// The state of the transfer page.
 class _TransferState extends State<TransferPage> {
+  final _api = Api();
 
   final _email;
   final _config;
@@ -27,8 +31,11 @@ class _TransferState extends State<TransferPage> {
     _email = email,
     _config = config;
   
-  void _newTransfer() {
-
+  void _newTransfer() async {
+    var initResult = await _api.initiateTransfer(_email);
+    if (initResult != null) {
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new QrPage(initResult.transferCode, _config)));
+    }
   }
 
   void _scanTransfer() {
