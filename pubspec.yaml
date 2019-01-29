@@ -27,6 +27,7 @@ dependencies:
   path_provider: ^0.4.1
   qr_flutter: ^1.1.6
   barcode_scan: ^0.0.4
+  location: ^1.4.1
 
 dev_dependencies:
   flutter_test:

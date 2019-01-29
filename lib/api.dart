@@ -64,22 +64,22 @@ class Api {
       return RegistrationResult.FAILURE;
   }
 
-  Future<PendingTransfer> initiateTransfer(String email) async {
+  Future<PendingTransfer> initiateTransfer(String email, Map<String, double> position) async {
     if (!_ready) {
       await _config.init();
       _ready = true;
     }
 
     var body = {'email': email,
-                'latitude': '42.42',
-                'longitude': '13.13'};
+                'latitude': position['latitude'].toString(),
+                'longitude': position['longitude'].toString()};
 
     var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
     
     if (response.statusCode == 201) {
       var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
       Map<String, double> location = {'latitude': responseJson['latitude'], 'longitude': responseJson['longitude']};
-      return PendingTransfer(responseJson['transfer_code'], location);
+      return PendingTransfer(responseJson['id'], location);
     }
     else {
       print('Failed with status code ${response.statusCode}');
@@ -87,17 +87,17 @@ class Api {
     }
   }
 
-  Future<ConfirmationResult> confirmTransfer(String transferCode, String email) async {
+  Future<ConfirmationResult> confirmTransfer(String transferCode, String email, Map<String, double> position) async {
     if (!_ready) {
       await _config.init();
       _ready = true;
     }
 
     var body = {'email': email,
-                'latitude': '42.42',
-                'longitude': '13.13'};
+                'latitude': position['latitude'].toString(),
+                'longitude': position['longitude'].toString()};
 
-    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/${transferCode}/confirm", body: body);
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
     
     if (response.statusCode == 201) {
       return ConfirmationResult.SUCCESS;

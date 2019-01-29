@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:async';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/api.dart';
@@ -25,6 +26,7 @@ class TransferPage extends StatefulWidget {
 /// The state of the transfer page.
 class _TransferState extends State<TransferPage> {
   final _api = Api();
+  final location = Location();
 
   final _email;
   final _config;
@@ -79,15 +81,17 @@ class _TransferState extends State<TransferPage> {
   }
 
   void _newTransfer() async {
-    var initResult = await _api.initiateTransfer(_email);
+    Map<String, double> pos = await location.getLocation();
+    var initResult = await _api.initiateTransfer(_email, pos);
     if (initResult != null) {
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new QrPage(initResult.transferCode, _config)));
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => new QrPage(initResult.id, _config)));
     }
   }
 
   void _scanTransfer() async {
     var transferCode = await BarcodeScanner.scan();
-    var confirmResult = await _api.confirmTransfer(transferCode, _email);
+    Map<String, double> pos = await location.getLocation();
+    var confirmResult = await _api.confirmTransfer(transferCode, _email, pos);
     if (confirmResult == ConfirmationResult.SUCCESS) {
       _showSuccess();
     }
