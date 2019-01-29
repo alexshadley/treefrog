@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/registration_result.dart';
+import 'package:leapfrog/models/confirmation_result.dart';
 import 'package:leapfrog/models/pending_transfer.dart';
 import 'package:leapfrog/user.dart';
 import 'package:leapfrog/util.dart' as util;
@@ -63,10 +64,6 @@ class Api {
       return RegistrationResult.FAILURE;
   }
 
-  /// Creates a user in the backend database. [password] should only be used if
-  /// the user is being created using the `Email` sign-in method.
-  /// This will return the appropriate [RegistrationResult] for the situation
-  /// encountered.
   Future<PendingTransfer> initiateTransfer(String email) async {
     if (!_ready) {
       await _config.init();
@@ -87,6 +84,26 @@ class Api {
     else {
       print('Failed with status code ${response.statusCode}');
       return null;
+    }
+  }
+
+  Future<ConfirmationResult> confirmTransfer(String transferCode, String email) async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+
+    var body = {'email': email,
+                'latitude': '42.42',
+                'longitude': '13.13'};
+
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/${transferCode}/confirm", body: body);
+    
+    if (response.statusCode == 201) {
+      return ConfirmationResult.SUCCESS;
+    }
+    else {
+      return ConfirmationResult.FAILURE;
     }
   }
 }

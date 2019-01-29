@@ -1,10 +1,12 @@
 import 'dart:core';
 import 'dart:async';
 
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/models/pending_transfer.dart';
+import 'package:leapfrog/models/confirmation_result.dart';
 import 'package:leapfrog/views/qr_page.dart';
 
 class TransferPage extends StatefulWidget {
@@ -30,7 +32,52 @@ class _TransferState extends State<TransferPage> {
   _TransferState(String email, Config config) : 
     _email = email,
     _config = config;
-  
+
+  void _showSuccess() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Transfer Successful"),
+          content: new Text("Your leapfrog was swapped!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showFailure() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Transfer Failed"),
+          content: new Text("Your leapfrog was not swapped, try again!"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _newTransfer() async {
     var initResult = await _api.initiateTransfer(_email);
     if (initResult != null) {
@@ -38,8 +85,15 @@ class _TransferState extends State<TransferPage> {
     }
   }
 
-  void _scanTransfer() {
-
+  void _scanTransfer() async {
+    var transferCode = await BarcodeScanner.scan();
+    var confirmResult = await _api.confirmTransfer(transferCode, _email);
+    if (confirmResult == ConfirmationResult.SUCCESS) {
+      _showSuccess();
+    }
+    else {
+      _showFailure();
+    }
   }
 
   /// Builds the page [Widget].
