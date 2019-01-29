@@ -64,6 +64,7 @@ class Api {
       return RegistrationResult.FAILURE;
   }
 
+  /// Creates a new pending transfer in the database
   Future<PendingTransfer> initiateTransfer(String email, Map<String, double> position) async {
     if (!_ready) {
       await _config.init();
@@ -87,6 +88,7 @@ class Api {
     }
   }
 
+  /// Confirms a transfer created by another user
   Future<ConfirmationResult> confirmTransfer(String transferCode, String email, Map<String, double> position) async {
     if (!_ready) {
       await _config.init();
