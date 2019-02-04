@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/views/map_page.dart';
-import 'package:leapfrog/views/transfer_page.dart';
+import 'package:leapfrog/views/transfer_menu_page.dart';
 
 /// A placeholder. This will be replaced with the map when it's ready, but
 /// I needed somewhere to navigate to after a successful login.
@@ -35,7 +35,7 @@ class _MenuState extends State<Menu> {
     _config = config;
   
   void _startTransfer() {
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferPage(_email, _config)));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config)));
   }
 
   /// Builds the page [Widget].
@@ -60,7 +60,7 @@ class _MenuState extends State<Menu> {
                     child: new RaisedButton(
                       color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
                       child: new Text("Transfer"),
-                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferPage(_email, _config))),
+                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config))),
                     )
                 )
               ],

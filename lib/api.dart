@@ -71,9 +71,12 @@ class Api {
       _ready = true;
     }
 
-    var body = {'email': email,
-                'latitude': position['latitude'].toString(),
-                'longitude': position['longitude'].toString()};
+    var body = 
+      {
+        'email': email,
+        'latitude': position['latitude'].toString(),
+        'longitude': position['longitude'].toString()
+      };
 
     var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
     
@@ -95,9 +98,12 @@ class Api {
       _ready = true;
     }
 
-    var body = {'email': email,
-                'latitude': position['latitude'].toString(),
-                'longitude': position['longitude'].toString()};
+    var body = 
+      {
+        'email': email,
+        'latitude': position['latitude'].toString(),
+        'longitude': position['longitude'].toString()
+      };
 
     var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
     

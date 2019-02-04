@@ -2,50 +2,48 @@ import 'dart:core';
 import 'dart:async';
 
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:location/location.dart';
 import 'package:flutter/material.dart';
-import 'package:leapfrog/config.dart';
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/models/pending_transfer.dart';
 import 'package:leapfrog/models/confirmation_result.dart';
 import 'package:leapfrog/views/qr_page.dart';
+import 'package:location/location.dart';
 
-class TransferPage extends StatefulWidget {
+import 'package:leapfrog/config.dart';
+
+class TransferMenuPage extends StatefulWidget {
   final _email;
   final _config;
 
-  TransferPage(String email, Config config) :
+  TransferMenuPage(String email, Config config) :
     _email = email,
     _config = config;
 
   /// Creates the page state.
   @override
-  _TransferState createState() => new _TransferState(_email, _config);
+  _TransferMenuState createState() => new _TransferMenuState(_email, _config);
 }
 
 /// The state of the transfer page.
-class _TransferState extends State<TransferPage> {
+class _TransferMenuState extends State<TransferMenuPage> {
   final _api = Api();
   final location = Location();
 
   final _email;
   final _config;
 
-  _TransferState(String email, Config config) : 
+  _TransferMenuState(String email, Config config) : 
     _email = email,
     _config = config;
 
   void _showSuccess() {
-    // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text("Transfer Successful"),
           content: new Text("Your leapfrog was swapped!"),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text("Close"),
               onPressed: () {
@@ -62,12 +60,10 @@ class _TransferState extends State<TransferPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        // return object of type Dialog
         return AlertDialog(
           title: new Text("Transfer Failed"),
           content: new Text("Your leapfrog was not swapped, try again!"),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text("Close"),
               onPressed: () {
