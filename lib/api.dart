@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/registration_result.dart';
+import 'package:leapfrog/models/confirmation_result.dart';
+import 'package:leapfrog/models/pending_transfer.dart';
 import 'package:leapfrog/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
@@ -60,5 +62,56 @@ class Api {
       return RegistrationResult.DUPLICATE_EMAIL;
     else
       return RegistrationResult.FAILURE;
+  }
+
+  /// Creates a new pending transfer in the database
+  Future<PendingTransfer> initiateTransfer(String email, Map<String, double> position) async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+
+    var body = 
+      {
+        'email': email,
+        'latitude': position['latitude'].toString(),
+        'longitude': position['longitude'].toString()
+      };
+
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
+    
+    if (response.statusCode == 201) {
+      var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
+      Map<String, double> location = {'latitude': responseJson['latitude'], 'longitude': responseJson['longitude']};
+      return PendingTransfer(responseJson['id'], location);
+    }
+    else {
+      print('Failed with status code ${response.statusCode}');
+      return null;
+    }
+  }
+
+  /// Confirms a transfer created by another user
+  Future<ConfirmationResult> confirmTransfer(String transferCode, String email, Map<String, double> position) async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+
+    var body = 
+      {
+        'email': email,
+        'latitude': position['latitude'].toString(),
+        'longitude': position['longitude'].toString()
+      };
+
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
+    
+    if (response.statusCode == 201) {
+      return ConfirmationResult.SUCCESS;
+    }
+    else {
+      return ConfirmationResult.FAILURE;
+    }
   }
 }
