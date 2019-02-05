@@ -12,6 +12,7 @@ import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
 import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// A type corresponding to any function that performs OAuth login.

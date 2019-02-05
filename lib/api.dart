@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert' as convert;
+import 'dart:core';
 
 import 'package:http/http.dart' as http;
 
@@ -7,7 +8,8 @@ import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/models/confirmation_result.dart';
 import 'package:leapfrog/models/pending_transfer.dart';
-import 'package:leapfrog/user.dart';
+import 'package:leapfrog/models/transfer.dart';
+import 'package:leapfrog/models/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// Interfaces with the app's backend API.
@@ -113,5 +115,27 @@ class Api {
     else {
       return ConfirmationResult.FAILURE;
     }
+  }
+
+  /// Gets a list of transfers for the frog with ID [leapfrogId], where the first element is
+  /// the leapfrog's first transfer.
+  Future<List<Transfer>> getTransfersForFrog(String leapfrogId) async {
+    if (!_ready) {
+      await _config.init();
+      _ready = true;
+    }
+    
+    http.Response response = await http.get("${_config.getValue("api_url")}/transfers/leapfrog?id=$leapfrogId");
+
+    if (response.statusCode != 200)
+      return null;
+
+    var body = convert.jsonDecode(response.body);
+    var transfers = new List<Transfer>();
+    for (var i = 0; i < body.length; i++) {
+      transfers.add(Transfer.fromJson(body[i]));
+    }
+
+    return transfers;
   }
 }

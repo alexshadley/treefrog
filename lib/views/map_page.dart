@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:leapfrog/api.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -12,10 +14,14 @@ class _MapState extends State<MapPage> {
 
   var mapController;
 
-  void _onMapCreated(GoogleMapController controller) {
+  var _api;
+
+  void _onMapCreated(GoogleMapController controller) async {
     setState(() {
       mapController = controller;
     });
+
+    _api = new Api();
   }
 
   @override
