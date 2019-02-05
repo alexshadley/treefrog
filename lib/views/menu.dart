@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/views/map_page.dart';
+import 'package:leapfrog/views/transfer_menu_page.dart';
 
 /// A placeholder. This will be replaced with the map when it's ready, but
 /// I needed somewhere to navigate to after a successful login.
@@ -20,15 +21,22 @@ class Menu extends StatefulWidget {
 
   /// Creates the page state.
   @override
-  _MenuState createState() => new _MenuState(_config);
+  _MenuState createState() => new _MenuState(_email, _config);
 }
 
 /// The state of the placeholder page.
 class _MenuState extends State<Menu> {
 
+  final _email;
   final _config;
 
-  _MenuState(Config config) : _config = config;
+  _MenuState(String email, Config config) :
+    _email = email,
+    _config = config;
+  
+  void _startTransfer() {
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config)));
+  }
 
   /// Builds the page [Widget].
   Widget build(BuildContext context) {
@@ -45,6 +53,14 @@ class _MenuState extends State<Menu> {
                       color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
                       child: new Text("Map"),
                       onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new MapPage())),
+                    )
+                ),
+                new Container(
+                    margin: new EdgeInsets.fromLTRB(0.0, _config.getValue("form_submit_margin"), 0.0, 0.0),
+                    child: new RaisedButton(
+                      color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
+                      child: new Text("Transfer"),
+                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config))),
                     )
                 )
               ],
