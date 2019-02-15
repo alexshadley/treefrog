@@ -40,7 +40,7 @@ class Api {
   /// the user is being created using the `Email` sign-in method.
   /// This will return the appropriate [RegistrationResult] for the situation
   /// encountered.
-  Future<ResultType> registerUser(String email, String displayName, String method, [String password]) async {
+  Future<SignInResultType> registerUser(String email, String displayName, String method, [String password]) async {
     if (!_ready) {
       await _config.init();
       _ready = true;
@@ -60,11 +60,11 @@ class Api {
     var response = await http.post("${_config.getValue("api_url")}/users/", body: body);
 
     if (response.statusCode == 201)
-      return ResultType.CREATED;
+      return SignInResultType.CREATED;
     else if(response.statusCode == 400)
-      return ResultType.DUPLICATE_EMAIL;
+      return SignInResultType.DUPLICATE_EMAIL;
     else
-      return ResultType.FAILURE;
+      return SignInResultType.FAILURE;
   }
 
   /// Creates a new pending transfer in the database

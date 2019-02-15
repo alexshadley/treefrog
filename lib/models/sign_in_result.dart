@@ -1,5 +1,5 @@
 /// Possible results of a user sign-in.
-enum ResultType {
+enum SignInResultType {
   /// A new account was created for the user.
   CREATED,
 
@@ -29,7 +29,7 @@ class SignInResult {
   final resultType;
   final email;
 
-  SignInResult(ResultType resultType, String email) :
+  SignInResult(SignInResultType resultType, String email) :
     this.resultType = resultType,
     this.email = email;
 }

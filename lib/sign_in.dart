@@ -59,7 +59,7 @@ class SignIn {
       return new SignInResult(resultType, data['email']);
     }
     else {
-      return new SignInResult(ResultType.FAILURE, "");
+      return new SignInResult(SignInResultType.FAILURE, "");
     }
   }
 
@@ -111,8 +111,8 @@ class SignIn {
   /// Calls the API to sign the user in. [tryRegister] indicates whether it should
   /// try to register the user in the event that no user exists with [email].
   ///
-  /// See [ResultType] for documentation on the return values.
-  Future<ResultType> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
+  /// See [SignInResultType] for documentation on the return values.
+  Future<SignInResultType> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
     if (password == null)
       password = "";
     else
@@ -122,26 +122,26 @@ class SignIn {
 
     if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
       _cacheLogin(email);
-      return ResultType.SIGNED_IN;
+      return SignInResultType.SIGNED_IN;
     }
     else if (user != null && method.toUpperCase() != signInMethod.name(user.method)) {
-      return ResultType.INCORRECT_METHOD;
+      return SignInResultType.INCORRECT_METHOD;
     }
     else if (user != null) {
-      return ResultType.INCORRECT_PASSWORD;
+      return SignInResultType.INCORRECT_PASSWORD;
     }
     else if (tryRegister) {
       var result = await _api.registerUser(email, displayName, method, password);
-      if (result == ResultType.CREATED) {
+      if (result == SignInResultType.CREATED) {
         _cacheLogin(email);
-        return ResultType.CREATED;
+        return SignInResultType.CREATED;
       }
       else {
         return result;
       }
     }
     else {
-      return ResultType.NONEXISTENT_USER;
+      return SignInResultType.NONEXISTENT_USER;
     }
   }
 }

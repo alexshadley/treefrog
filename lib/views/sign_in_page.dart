@@ -47,10 +47,10 @@ class _SignInPageState extends State<SignInPage> {
   Function() _oauthSignIn(OAuthLoginMethod method) {
     return (){
       method().then((result) {
-        if (result.resultType == ResultType.INCORRECT_METHOD) {
+        if (result.resultType == SignInResultType.INCORRECT_METHOD) {
           _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Email was originally registered with a different sign-in method.")));
         }
-        else if (result.resultType == ResultType.FAILURE) {
+        else if (result.resultType == SignInResultType.FAILURE) {
           _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Registration failed.")));
         }
         else {
