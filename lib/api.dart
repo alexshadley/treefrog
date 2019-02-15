@@ -57,7 +57,7 @@ class Api {
     }
 
     var url = _config.getValue("api_url");
-    var response = await http.post("${_config.getValue("api_url")}/users/", body: body);
+    var response = await http.post("${_config.getValue("api_url")}/users", body: body);
 
     if (response.statusCode == 201)
       return SignInResultType.CREATED;
@@ -81,7 +81,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers", body: body);
     
     if (response.statusCode == 201) {
       var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
