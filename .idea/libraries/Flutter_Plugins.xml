@@ -2,8 +2,11 @@
   <library name="Flutter Plugins" type="FlutterPluginsLibraryType">
     <CLASSES>
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-3.2.4" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-1.1.1" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-0.4.1" />
+      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/location-1.4.1" />
+      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-1.1.1" />
+      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/barcode_scan-0.0.8" />
+      <root url="file://C:/flutter/.pub-cache/git/plugins-266370beedcacd5052e054d33cd6e5186bceb8ba/packages/google_maps_flutter" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

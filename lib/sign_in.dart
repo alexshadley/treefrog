@@ -9,9 +9,9 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
 import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// A type corresponding to any function that performs OAuth login.
@@ -59,7 +59,7 @@ class SignIn {
       return new SignInResult(resultType, data['email']);
     }
     else {
-      return new SignInResult(ResultType.FAILURE, "");
+      return new SignInResult(SignInResultType.FAILURE, "");
     }
   }
 
@@ -111,8 +111,8 @@ class SignIn {
   /// Calls the API to sign the user in. [tryRegister] indicates whether it should
   /// try to register the user in the event that no user exists with [email].
   ///
-  /// See [ResultType] for documentation on the return values.
-  Future<ResultType> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
+  /// See [SignInResultType] for documentation on the return values.
+  Future<SignInResultType> _loginWithApi(String email, String displayName, String method, bool tryRegister, [String password]) async {
     if (password == null)
       password = "";
     else
@@ -122,26 +122,26 @@ class SignIn {
 
     if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
       _cacheLogin(email);
-      return ResultType.SUCCESS;
+      return SignInResultType.SIGNED_IN;
     }
     else if (user != null && method.toUpperCase() != signInMethod.name(user.method)) {
-      return ResultType.INCORRECT_METHOD;
+      return SignInResultType.INCORRECT_METHOD;
     }
     else if (user != null) {
-      return ResultType.INCORRECT_PASSWORD;
+      return SignInResultType.INCORRECT_PASSWORD;
     }
     else if (tryRegister) {
       var result = await _api.registerUser(email, displayName, method, password);
-      if (result == RegistrationResult.SUCCESS) {
+      if (result == SignInResultType.CREATED) {
         _cacheLogin(email);
-        return ResultType.SUCCESS;
+        return SignInResultType.CREATED;
       }
       else {
-        return ResultType.FAILURE;
+        return result;
       }
     }
     else {
-      return ResultType.NONEXISTENT_USER;
+      return SignInResultType.NONEXISTENT_USER;
     }
   }
 }
