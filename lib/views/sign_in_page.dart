@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
+import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/views/email_sign_up_page.dart';
-import 'package:leapfrog/views/email_sign_in_page.dart';
-import 'package:leapfrog/views/menu.dart';
 import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/sign_in.dart';
+import 'package:leapfrog/views/email_sign_in_page.dart';
+import 'package:leapfrog/views/email_sign_up_page.dart';
+import 'package:leapfrog/views/menu.dart';
 
 /// The main sign-in page, where the user can select a sign-in method.
 class SignInPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class SignInPage extends StatefulWidget {
 
 /// The state of the sign-in page.
 class _SignInPageState extends State<SignInPage> {
+  final _api = new Api();
   final _config = new Config();
   final _signIn = new SignIn();
   final _scaffold = new GlobalKey<ScaffoldState>();

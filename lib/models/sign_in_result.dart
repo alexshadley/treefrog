@@ -1,11 +1,10 @@
 /// Possible results of a user sign-in.
 enum ResultType {
-  /// The user is allowed to sign in.
-  /// This indicates that:
-  /// * The user exists
-  /// * The user used the correct method in signing in
-  /// * The user entered the correct password, if applicable
-  SUCCESS,
+  /// A new account was created for the user.
+  CREATED,
+
+  /// The user has an existing account and signed in successfully.
+  SIGNED_IN,
 
   /// The user attempted to sign in using the wrong method.
   /// For example, if the account was created through a Google account,
@@ -18,6 +17,9 @@ enum ResultType {
   /// The user entered an incorrect password.
   /// This only applies for Email sign-ins.
   INCORRECT_PASSWORD,
+
+  /// The user tried to register, but a user with the same email already exists.
+  DUPLICATE_EMAIL,
 
   /// The sign-in attempt failed for an unknown reason.
   FAILURE

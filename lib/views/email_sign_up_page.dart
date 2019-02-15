@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/views/menu.dart';
-import 'package:leapfrog/models/registration_result.dart';
+import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/util.dart';
+import 'package:leapfrog/views/menu.dart';
 
 /// A page where the user can sign up using an email and password.
 class SignUpPage extends StatefulWidget {
@@ -12,7 +12,8 @@ class SignUpPage extends StatefulWidget {
 
   /// Initializes the sign up page.
   /// [config] **must** have had its `init()` method called prior to this.
-  SignUpPage(Config config) : _config = config;
+  SignUpPage(Config config) :
+    _config = config;
 
   /// Creates the page state.
   @override
@@ -155,10 +156,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           _api.registerUser(_emailController.text, "${_firstNameController.text} ${_lastNameController.text}", "Email", _passwordController.text)
                           .then((result){
                             setState(() {
-                              if (result.resultType == RegistrationResult.SUCCESS) {
-                                Navigator.push(context, new MaterialPageRoute(builder: (builder) => new Menu(result.email, _config)));
+                              if (result == ResultType.CREATED) {
+                                Navigator.push(context, new MaterialPageRoute(builder: (builder) => new Menu(_emailController.text, _config)));
                               }
-                              else if (result.resultType == RegistrationResult.DUPLICATE_EMAIL) {
+                              else if (result == ResultType.DUPLICATE_EMAIL) {
                                 setState(() {
                                   _uniquenessError = "Email already belongs to an account";
                                 });

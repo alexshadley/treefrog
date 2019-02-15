@@ -201,7 +201,7 @@
         <entry key="google_maps_flutter">
           <value>
             <list>
-              <option value="C:/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.0.3+3/lib" />
+              <option value="C:/flutter/.pub-cache/git/plugins-266370beedcacd5052e054d33cd6e5186bceb8ba/packages/google_maps_flutter/lib" />
             </list>
           </value>
         </entry>
@@ -523,6 +523,7 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://C:/flutter/.pub-cache/git/plugins-266370beedcacd5052e054d33cd6e5186bceb8ba/packages/google_maps_flutter/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/analyzer-0.34.3/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/args-1.5.1/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.0.8/lib" />
@@ -549,7 +550,6 @@
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-8.2.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/front_end-0.1.9+1/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/glob-1.1.7/lib" />
-      <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.0.3+3/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-3.2.4/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/graphs-0.2.0/lib" />
       <root url="file://C:/flutter/.pub-cache/hosted/pub.dartlang.org/html-0.13.3+3/lib" />

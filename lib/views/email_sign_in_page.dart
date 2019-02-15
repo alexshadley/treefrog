@@ -3,10 +3,10 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/views/menu.dart';
-import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/util.dart';
+import 'package:leapfrog/views/menu.dart';
 
 /// A page allowing the user to sign in using an email and password.
 class EmailSignInPage extends StatefulWidget {
@@ -14,7 +14,8 @@ class EmailSignInPage extends StatefulWidget {
 
   /// Initializes the page.
   /// [config] **must** have had its `init()` method called prior to this.
-  EmailSignInPage(Config config) : _config = config;
+  EmailSignInPage(Config config) :
+    _config = config;
 
   /// Creates the page state.
   @override
@@ -97,7 +98,7 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
                         if (_formKey.currentState.validate()) {
                           _signIn.emailSignIn(_emailController.text, _passwordController.text)
                           .then((result) {
-                            if (result.resultType == ResultType.SUCCESS)
+                            if (result.resultType == ResultType.SIGNED_IN)
                               Navigator.push(context, new MaterialPageRoute(builder: (context) => new Menu(result.email, _config)));
                             else if (result.resultType == ResultType.NONEXISTENT_USER || result.resultType == ResultType.INCORRECT_PASSWORD)
                               _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Email or password was incorrect.")));

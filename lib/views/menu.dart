@@ -52,7 +52,7 @@ class _MenuState extends State<Menu> {
                     child: new RaisedButton(
                       color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
                       child: new Text("Map"),
-                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new MapPage())),
+                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new MapPage(_config, _email))),
                     )
                 ),
                 new Container(

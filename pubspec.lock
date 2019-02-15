@@ -196,10 +196,12 @@ packages:
   google_maps_flutter:
     dependency: "direct main"
     description:
-      name: google_maps_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3+3"
+      path: "packages/google_maps_flutter"
+      ref: google_maps_polyline
+      resolved-ref: "266370beedcacd5052e054d33cd6e5186bceb8ba"
+      url: "git://github.com/awazgyawali/plugins/"
+    source: git
+    version: "0.2.0"
   google_sign_in:
     dependency: "direct main"
     description:

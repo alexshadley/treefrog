@@ -9,7 +9,6 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/registration_result.dart';
 import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
 import 'package:leapfrog/models/sign_in_result.dart';
 import 'package:leapfrog/models/user.dart';
@@ -123,7 +122,7 @@ class SignIn {
 
     if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
       _cacheLogin(email);
-      return ResultType.SUCCESS;
+      return ResultType.SIGNED_IN;
     }
     else if (user != null && method.toUpperCase() != signInMethod.name(user.method)) {
       return ResultType.INCORRECT_METHOD;
@@ -133,12 +132,12 @@ class SignIn {
     }
     else if (tryRegister) {
       var result = await _api.registerUser(email, displayName, method, password);
-      if (result == RegistrationResult.SUCCESS) {
+      if (result == ResultType.CREATED) {
         _cacheLogin(email);
-        return ResultType.SUCCESS;
+        return ResultType.CREATED;
       }
       else {
-        return ResultType.FAILURE;
+        return result;
       }
     }
     else {
