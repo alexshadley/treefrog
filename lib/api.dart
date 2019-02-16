@@ -126,7 +126,7 @@ class Api {
       _ready = true;
     }
     
-    http.Response response = await http.get("${_config.getValue("api_url")}/transfers/leapfrog/$leapfrogId");
+    http.Response response = await http.get("${_config.getValue("api_url")}/leapfrogs/$leapfrogId/transfers/");
 
     if (response.statusCode != 200)
       return null;
@@ -148,7 +148,7 @@ class Api {
       _ready = true;
     }
 
-    http.Response response = await http.get("${_config.getValue("api_url")}/users/leapfrogs/$email");
+    http.Response response = await http.get("${_config.getValue("api_url")}/users/$email/leapfrogs/");
 
     if (response.statusCode != 200)
       return null;
