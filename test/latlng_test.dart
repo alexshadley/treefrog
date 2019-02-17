@@ -13,9 +13,9 @@ void main() {
 
   group('operator==', () {
     test('Objecs with all fields equal should be considered equal', () {
-      var sameLatLng = new LatLng(testLatitude, testLongitude);
+      var equalLatLng = new LatLng(testLatitude, testLongitude);
 
-      expect(testLatLng, equals(sameLatLng));
+      expect(testLatLng, equals(equalLatLng));
     });
 
     test('Objects with differing latitude should be considered not equal', () {
@@ -33,9 +33,9 @@ void main() {
 
   group('hashCode', () {
     test('Hash code should be equal for equal objects', () {
-      var sameLatLng = new LatLng(testLatitude, testLongitude);
+      var equalLatLng = new LatLng(testLatitude, testLongitude);
 
-      expect(testLatLng.hashCode, equals(sameLatLng.hashCode));
+      expect(testLatLng.hashCode, equals(equalLatLng.hashCode));
     });
 
     test('Hash code should be different for objects with different latitude', () {

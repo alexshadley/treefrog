@@ -7,78 +7,72 @@ void main() {
   final testTransferId = 'thisisfakenews';
   final testLeapfrogId = 'thisismorefakenews';
 
+  var snapshot;
+
+  setUp(() {
+    snapshot = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
+  });
+
   group('operator==', () {
-    var snapshot1;
-
-    setUp(() {
-      snapshot1 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
-    });
-
     test('Objects with all fields equal should be considered equal', () {
-      var snapshot2 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
+      var equalSnapshot = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
 
-      expect(snapshot1, equals(snapshot2));
+      expect(snapshot, equals(equalSnapshot));
     });
 
     test('Objects with differing emails should be considered not equal', () {
-      var snapshot2 = new UserSnapshot('not@the.same', testTransferId, testLeapfrogId);
+      var differentSnapshot = new UserSnapshot('not@the.same', testTransferId, testLeapfrogId);
 
-      expect(snapshot1, isNot(equals(snapshot2)));
+      expect(snapshot, isNot(equals(differentSnapshot)));
     });
 
     test('Objects with differing last transfer IDs should be considered not equal', () {
-      var snapshot2 = new UserSnapshot(testEmail, 'different', testLeapfrogId);
+      var differentSnapshot = new UserSnapshot(testEmail, 'different', testLeapfrogId);
 
-      expect(snapshot1, isNot(equals(snapshot2)));
+      expect(snapshot, isNot(equals(differentSnapshot)));
     });
 
     test('Objects with differing leapfrog IDs should be considered not equal', () {
-      var snapshot2 = new UserSnapshot(testEmail, testTransferId, 'different');
+      var differentSnapshot = new UserSnapshot(testEmail, testTransferId, 'different');
 
-      expect(snapshot1, isNot(equals(snapshot2)));
+      expect(snapshot, isNot(equals(differentSnapshot)));
     });
 
     test('Objects with differing types should be considered not equal', () {
-      expect(snapshot1, isNot(equals(5)));
+      expect(snapshot, isNot(equals(5)));
     });
   });
   
   group('hashCode', () {
     test('Hash code should be equal for equal objects', () {
-      var snapshot1 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
-      var snapshot2 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
+      var equalSnapshot = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
 
-      expect(snapshot1.hashCode, equals(snapshot2.hashCode));
+      expect(snapshot.hashCode, equals(equalSnapshot.hashCode));
     });
 
     test('Hash code should be different for objects with different emails', () {
-      var snapshot1 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
-      var snapshot2 = new UserSnapshot('not@the.same', testTransferId, testLeapfrogId);
+      var differentSnapshot = new UserSnapshot('not@the.same', testTransferId, testLeapfrogId);
 
-      expect(snapshot1.hashCode, isNot(equals(snapshot2.hashCode)));
+      expect(snapshot.hashCode, isNot(equals(differentSnapshot.hashCode)));
     });
 
     test('Hash code should be different for objects with different transfer IDs', () {
-      var snapshot1 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
-      var snapshot2 = new UserSnapshot(testEmail, 'different', testLeapfrogId);
+      var differentSnapshot = new UserSnapshot(testEmail, 'different', testLeapfrogId);
 
-      expect(snapshot1.hashCode, isNot(equals(snapshot2.hashCode)));
+      expect(snapshot.hashCode, isNot(equals(differentSnapshot.hashCode)));
     });
 
     test('Hash code should be different for objects with different leapfrog IDs', () {
-      var snapshot1 = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
-      var snapshot2 = new UserSnapshot(testEmail, testTransferId, 'different');
+      var differentSnapshot = new UserSnapshot(testEmail, testTransferId, 'different');
 
-      expect(snapshot1.hashCode, isNot(equals(snapshot2.hashCode)));
+      expect(snapshot.hashCode, isNot(equals(differentSnapshot.hashCode)));
     });
   });
 
   group('serialization', () {
-    var snapshot;
     var json;
 
     setUp(() {
-      snapshot = new UserSnapshot(testEmail, testTransferId, testLeapfrogId);
       json = {
         'email': testEmail,
         'last_transfer': testTransferId,
