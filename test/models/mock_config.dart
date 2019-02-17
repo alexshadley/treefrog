@@ -1,3 +1,3 @@
-part of '../test_api.dart';
+part of '../api_test.dart';
 
 class MockConfig extends Mock implements Config {}
