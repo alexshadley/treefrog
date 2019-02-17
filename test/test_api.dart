@@ -8,9 +8,7 @@ import 'package:test/test.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/confirmation_result.dart';
-import 'package:leapfrog/models/sign_in_method.dart';
-import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
 part 'models/mock_config.dart';

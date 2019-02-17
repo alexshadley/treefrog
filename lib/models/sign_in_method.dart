@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 /// Allowable methods for user sign-in.
 enum SignInMethod {
   GOOGLE,

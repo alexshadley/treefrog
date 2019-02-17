@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 /// Model representing a pending transfer in the database.  Note that `id` is
 /// the data built into the confirmation barcode
 class PendingTransfer {

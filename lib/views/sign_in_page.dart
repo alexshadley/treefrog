@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/views/email_sign_in_page.dart';
 import 'package:leapfrog/views/email_sign_up_page.dart';

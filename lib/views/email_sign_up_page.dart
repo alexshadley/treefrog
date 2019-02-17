@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/util.dart';
 import 'package:leapfrog/views/menu.dart';
 

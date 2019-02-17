@@ -9,8 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
-import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// A type corresponding to any function that performs OAuth login.
@@ -25,15 +24,10 @@ class SignIn {
     _api = api,
     _config = config;
 
-  /// Indicates whether `init()` has been called on [_config].
-  var _ready = false;
-
   /// Calls Google's OAuth flow to sign in.
   Future<SignInResult> googleSignIn() async {
-    if(!_ready) {
+    if(!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var _googleSignIn = new GoogleSignIn(
         scopes: ['email']
@@ -45,10 +39,8 @@ class SignIn {
 
   /// Calls Facebook's OAuth flow to sign in.
   Future<SignInResult> facebookSignIn() async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var result = await new FacebookLogin().logInWithReadPermissions(['email']);
 
@@ -77,10 +69,8 @@ class SignIn {
   /// than the millisecond value of `login_timeout` in config.json.
   /// Otherwise, it will return an empty string.
   Future<String> checkCache() async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
 
@@ -98,10 +88,8 @@ class SignIn {
   /// Saves a login to persistent storage. This allows the user to enter the
   /// app the next time without signing in again.
   void _cacheLogin(String email) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
     await file.create(recursive: true);
@@ -123,11 +111,11 @@ class SignIn {
 
     var user = await _api.getUser(email);
 
-    if (user != null && method.toUpperCase() == signInMethod.name(user.method) && password == user.passwordHash) {
+    if (user != null && method.toUpperCase() == name(user.method) && password == user.passwordHash) {
       _cacheLogin(email);
       return SignInResultType.SIGNED_IN;
     }
-    else if (user != null && method.toUpperCase() != signInMethod.name(user.method)) {
+    else if (user != null && method.toUpperCase() != name(user.method)) {
       return SignInResultType.INCORRECT_METHOD;
     }
     else if (user != null) {

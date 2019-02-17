@@ -1,3 +1,5 @@
+part of 'models.dart';
+
 /// Possible results of confirming a pending registration.
 enum ConfirmationResult {
   /// Successful confirmation

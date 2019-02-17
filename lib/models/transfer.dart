@@ -1,9 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
-
-import 'package:leapfrog/models/latlng.dart';
-import 'package:leapfrog/models/user.dart';
-
-part 'transfer.g.dart';
+part of 'models.dart';
 
 /// A transfer stored in the database.
 @JsonSerializable(nullable: false)
@@ -28,4 +23,16 @@ class Transfer {
 
   factory Transfer.fromJson(Map<String, dynamic> json) => _$TransferFromJson(json);
   Map<String, dynamic> toJson() => _$TransferToJson(this);
+
+  bool operator==(dynamic other){
+    if (!(other is Transfer))
+      return false;
+
+    return completingUser == other.completingUser && id == other.id &&
+        initiatingUser == other.initiatingUser && location == other.location;
+  }
+
+  int get hashCode {
+    
+  }
 }
