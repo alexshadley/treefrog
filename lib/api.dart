@@ -14,19 +14,22 @@ import 'package:leapfrog/util.dart' as util;
 
 /// Interfaces with the app's backend API.
 class Api {
-  final _config = new Config();
+  final _config;
+  final _httpClient;
 
-  var _ready = false;
+  /// Initializes a new API class. [http.BaseClient] is a base class, which allows
+  /// for mocking the HTTP client.
+  Api(http.BaseClient httpClient, Config config) :
+    _httpClient = httpClient,
+    _config = config;
 
   /// Gets a user from the API. This returns a [User] if a user exists with the
   /// given [email]; otherwise, it returns `null`.
   Future<User> getUser(String email) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
-    var response = await http.get("${_config.getValue("api_url")}/users/$email");
+    var response = await _httpClient.get("${_config.getValue("api_url")}/users/$email");
     if (response.statusCode != 200) {
       return null;
     }
@@ -41,10 +44,8 @@ class Api {
   /// This will return the appropriate [RegistrationResult] for the situation
   /// encountered.
   Future<SignInResultType> registerUser(String email, String displayName, String method, [String password]) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var body;
 
@@ -56,8 +57,7 @@ class Api {
       body = { 'email': email, 'display_name': displayName, 'method': method };
     }
 
-    var url = _config.getValue("api_url");
-    var response = await http.post("${_config.getValue("api_url")}/users/", body: body);
+    var response = await _httpClient.post("${_config.getValue("api_url")}/users/", body: body);
 
     if (response.statusCode == 201)
       return SignInResultType.CREATED;
@@ -69,10 +69,8 @@ class Api {
 
   /// Creates a new pending transfer in the database
   Future<PendingTransfer> initiateTransfer(String email, Map<String, double> position) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var body = 
       {
@@ -81,7 +79,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
+    var response = await _httpClient.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
     
     if (response.statusCode == 201) {
       var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
@@ -96,10 +94,8 @@ class Api {
 
   /// Confirms a transfer created by another user
   Future<ConfirmationResult> confirmTransfer(String transferCode, String email, Map<String, double> position) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
     var body = 
       {
@@ -108,7 +104,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
+    var response = await _httpClient.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
     
     if (response.statusCode == 201) {
       return ConfirmationResult.SUCCESS;
@@ -121,21 +117,20 @@ class Api {
   /// Gets a list of transfers for the frog with ID [leapfrogId], where the first element is
   /// the leapfrog's first transfer.
   Future<List<Transfer>> getTransfersForFrog(String leapfrogId) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
-    
-    http.Response response = await http.get("${_config.getValue("api_url")}/leapfrogs/$leapfrogId/transfers/");
+
+    var response = await _httpClient.get("${_config.getValue("api_url")}/leapfrogs/$leapfrogId/transfers/");
 
     if (response.statusCode != 200)
       return null;
 
     var body = convert.jsonDecode(response.body);
     var transfers = new List<Transfer>();
-    for (var i = 0; i < body.length; i++) {
-      transfers.add(Transfer.fromJson(body[i]));
-    }
+
+    body.forEach((d) {
+      transfers.add(Transfer.fromJson(d));
+    });
 
     return transfers;
   }
@@ -143,12 +138,10 @@ class Api {
   /// Gets all leapfrogs that the user with email [email] has held.
   /// These are in no particular order.
   Future<List<String>> getLeapfrogsForUser(String email) async {
-    if (!_ready) {
+    if (!_config.ready)
       await _config.init();
-      _ready = true;
-    }
 
-    http.Response response = await http.get("${_config.getValue("api_url")}/users/$email/leapfrogs/");
+    var response = await _httpClient.get("${_config.getValue("api_url")}/users/$email/leapfrogs/");
 
     if (response.statusCode != 200)
       return null;

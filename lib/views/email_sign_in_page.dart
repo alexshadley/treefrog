@@ -10,16 +10,18 @@ import 'package:leapfrog/views/menu.dart';
 
 /// A page allowing the user to sign in using an email and password.
 class EmailSignInPage extends StatefulWidget {
-  final Config _config;
+  final _config;
+  final _signIn;
 
   /// Initializes the page.
   /// [config] **must** have had its `init()` method called prior to this.
-  EmailSignInPage(Config config) :
-    _config = config;
+  EmailSignInPage(Config config, SignIn signIn) :
+    _config = config,
+    _signIn = signIn;
 
   /// Creates the page state.
   @override
-  _EmailSignInPageState createState() => new _EmailSignInPageState(_config);
+  _EmailSignInPageState createState() => new _EmailSignInPageState(_config, _signIn);
 }
 
 /// The state of the email sign-in page.
@@ -33,9 +35,9 @@ class _EmailSignInPageState extends State<EmailSignInPage> {
 
   /// Initializes the state.
   /// [config] **must** have had its `init()` method called prior to this.
-  _EmailSignInPageState(Config config) :
+  _EmailSignInPageState(Config config, SignIn signIn) :
     _config = config,
-    _signIn = new SignIn();
+    _signIn = signIn;
 
   /// Deletes the text input controllers.
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
@@ -37,7 +38,7 @@ class _SignUpPageState extends State<SignUpPage> {
   /// [config] **must** have had its `init()` method called prior to this.
   _SignUpPageState(Config config) :
     _config = config,
-    _api = new Api();
+    _api = new Api(new http.Client(), config);
 
   /// Initializes the page state.
   @override

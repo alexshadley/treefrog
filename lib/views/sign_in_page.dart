@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
@@ -13,18 +14,27 @@ import 'package:leapfrog/views/menu.dart';
 class SignInPage extends StatefulWidget {
   /// Creates the state of the sign-in page.
   @override
-  _SignInPageState createState() => new _SignInPageState();
+  _SignInPageState createState() {
+    final config = new Config();
+
+    return new _SignInPageState(new Api(new http.Client(), config), config);
+  }
 }
 
 /// The state of the sign-in page.
 class _SignInPageState extends State<SignInPage> {
-  final _api = new Api();
-  final _config = new Config();
-  final _signIn = new SignIn();
+  final _config;
+  final _api;
+  final _signIn;
   final _scaffold = new GlobalKey<ScaffoldState>();
 
-  /// Indicates whether `init()` has been called on [_config].
-  var _ready = false;
+  var _ready;
+
+  _SignInPageState(Api api, Config config) :
+    _config = config,
+    _api = api,
+    _signIn = new SignIn(api, config),
+    _ready = config.ready;
 
   /// Initializes the sign-in page state.
   @override
@@ -36,11 +46,13 @@ class _SignInPageState extends State<SignInPage> {
          Navigator.push(context, new MaterialPageRoute(builder: (context) => new Menu(email, _config)));
     });
 
-    _config.init().then((result) {
-      setState(() {
-        _ready = true;
+    if (!_ready) {
+      _config.init().then((result) {
+        setState(() {
+          _ready = true;
+        });
       });
-    });
+    }
   }
 
   /// Gets a function that can be called to sign in with the given [OAuthLoginMethod].
@@ -62,7 +74,7 @@ class _SignInPageState extends State<SignInPage> {
 
   /// Opens the email sign-in page.
   void _emailSignIn() {
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new EmailSignInPage(_config)));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new EmailSignInPage(_config, _signIn)));
   }
 
   /// Opens the email sign-up page.

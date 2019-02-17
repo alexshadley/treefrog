@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class TransferMenuPage extends StatefulWidget {
 
 /// The state of the transfer page.
 class _TransferMenuState extends State<TransferMenuPage> {
-  final _api = Api();
+  final _api;
   final location = Location();
 
   final _email;
@@ -32,7 +33,8 @@ class _TransferMenuState extends State<TransferMenuPage> {
 
   _TransferMenuState(String email, Config config) :
     _email = email,
-    _config = config;
+    _config = config,
+    _api = Api(new http.Client(), config);
 
   void _showSuccess() {
     showDialog(

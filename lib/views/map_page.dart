@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:location/location.dart' as location_services;
 
 import 'package:leapfrog/api.dart';
@@ -23,7 +24,7 @@ class MapPage extends StatefulWidget {
 
 class _MapState extends State<MapPage> {
 
-  final _api = new Api();
+  final _api;
   final _config;
   final _email;
 
@@ -32,7 +33,8 @@ class _MapState extends State<MapPage> {
 
   _MapState(Config config, String email) :
     _config = config,
-    _email = email;
+    _email = email,
+    _api = new Api(new http.Client(), config);
 
 
   void _onMapCreated(GoogleMapController controller) async {

@@ -11,7 +11,6 @@ import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/sign_in_method.dart' as signInMethod;
 import 'package:leapfrog/models/sign_in_result.dart';
-import 'package:leapfrog/models/user.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// A type corresponding to any function that performs OAuth login.
@@ -19,8 +18,12 @@ typedef Future<SignInResult> OAuthLoginMethod();
 
 /// Performs various tasks related to signing a user into the app.
 class SignIn {
-  final _api = new Api();
-  final _config = new Config();
+  final _api;
+  final _config;
+
+  SignIn(Api api, Config config) :
+    _api = api,
+    _config = config;
 
   /// Indicates whether `init()` has been called on [_config].
   var _ready = false;
