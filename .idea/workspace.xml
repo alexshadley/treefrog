@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4eecee2-0f62-4b1b-8e9f-24a251ba1ee5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/models/transfer.dart" afterPath="$PROJECT_DIR$/lib/models/transfer.dart" />
-      <change beforePath="$PROJECT_DIR$/test/transfer_test.dart" afterPath="$PROJECT_DIR$/test/transfer_test.dart" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/lib/file_factory.dart" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/test/signin_test.dart" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/lib/sign_in.dart" afterPath="$PROJECT_DIR$/lib/sign_in.dart" />
+      <change beforePath="$PROJECT_DIR$/lib/views/email_sign_up_page.dart" afterPath="$PROJECT_DIR$/lib/views/email_sign_up_page.dart" />
+      <change beforePath="$PROJECT_DIR$/lib/views/sign_in_page.dart" afterPath="$PROJECT_DIR$/lib/views/sign_in_page.dart" />
+      <change beforePath="$PROJECT_DIR$/test/api_test.dart" afterPath="$PROJECT_DIR$/test/api_test.dart" />
+      <change beforePath="$PROJECT_DIR$/test/latlng_test.dart" afterPath="$PROJECT_DIR$/test/models/latlng_test.dart" />
+      <change beforePath="$PROJECT_DIR$/test/models/mock_config.dart" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/test/transfer_test.dart" afterPath="$PROJECT_DIR$/test/models/transfer_test.dart" />
+      <change beforePath="$PROJECT_DIR$/test/usersnapshot_test.dart" afterPath="$PROJECT_DIR$/test/models/usersnapshot_test.dart" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -24,8 +33,8 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="transfer_test.dart" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/transfer_test.dart">
+      <file leaf-file-name="transfer_test.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/models/transfer_test.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="450">
               <caret line="122" column="20" lean-forward="true" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="20" />
@@ -36,66 +45,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="usersnapshot_test.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/usersnapshot_test.dart">
+      <file leaf-file-name="sign_in.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/sign_in.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1850">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="406">
+              <caret line="141" column="0" lean-forward="false" selection-start-line="137" selection-start-column="10" selection-end-line="141" selection-end-column="0" />
               <folding>
-                <element signature="e#0#32#0" expanded="true" />
+                <element signature="e#0#20#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="latlng.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/models/latlng.dart">
+      <file leaf-file-name="email_sign_up_page.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/views/email_sign_up_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="27" column="56" lean-forward="false" selection-start-line="27" selection-start-column="56" selection-end-line="27" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user_snapshot.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/models/user_snapshot.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="50" column="62" lean-forward="false" selection-start-line="50" selection-start-column="62" selection-end-line="50" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/models/models.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+            <state relative-caret-position="169">
+              <caret line="158" column="41" lean-forward="true" selection-start-line="158" selection-start-column="41" selection-end-line="158" selection-end-column="41" />
               <folding>
-                <element signature="e#128#160#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="transfer.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/models/transfer.dart">
+      <file leaf-file-name="util.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/util.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="8" column="15" lean-forward="true" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign_in_page.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/views/sign_in_page.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="275">
-              <caret line="37" column="55" lean-forward="false" selection-start-line="37" selection-start-column="55" selection-end-line="37" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="transfer.g.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/models/transfer.g.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="2" column="16" lean-forward="false" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-              <folding />
+              <caret line="82" column="104" lean-forward="false" selection-start-line="82" selection-start-column="104" selection-end-line="82" selection-end-column="104" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,9 +94,55 @@
       <file leaf-file-name="api.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/api.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
+            <state relative-caret-position="367">
+              <caret line="60" column="26" lean-forward="false" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/models/user.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="10" column="94" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="94" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign_in_method.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/models/sign_in_method.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="signin_test.dart" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/signin_test.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="170" column="89" lean-forward="false" selection-start-line="170" selection-start-column="89" selection-end-line="170" selection-end-column="89" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api_test.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/api_test.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1050">
+              <caret line="254" column="7" lean-forward="true" selection-start-line="254" selection-start-column="7" selection-end-line="254" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -145,15 +182,16 @@
       <find>getTransfers</find>
       <find>initiateTransfer</find>
       <find>http</find>
+      <find>-93.7172</find>
       <find>new Api</find>
       <find>&quot;</find>
-      <find>-93.7172</find>
+      <find>registerUser</find>
     </findStrings>
     <replaceStrings>
       <replace />
-      <replace>'</replace>
       <replace>testLatitude</replace>
       <replace>testLongitude</replace>
+      <replace>'</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -167,9 +205,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/email_sign_up.dart" />
-        <option value="$PROJECT_DIR$/lib/email_sign_in.dart" />
-        <option value="$PROJECT_DIR$/lib/views/email_sign_in.dart" />
         <option value="$PROJECT_DIR$/lib/views/email_sign_up.dart" />
         <option value="$PROJECT_DIR$/lib/views/main.dart" />
         <option value="$PROJECT_DIR$/lib/views/sign_in.dart" />
@@ -188,7 +223,6 @@
         <option value="$PROJECT_DIR$/res/config.json" />
         <option value="$PROJECT_DIR$/lib/views/map_page.dart" />
         <option value="$PROJECT_DIR$/pubspec.yaml" />
-        <option value="$PROJECT_DIR$/test/models/mock_config.dart" />
         <option value="$PROJECT_DIR$/test/widget_test.dart" />
         <option value="$PROJECT_DIR$/lib/config.dart" />
         <option value="$PROJECT_DIR$/test/models/test_transfer.dart" />
@@ -204,11 +238,8 @@
         <option value="$PROJECT_DIR$/lib/models/user_snapshot.g.dart" />
         <option value="$PROJECT_DIR$/lib/models.dart" />
         <option value="$PROJECT_DIR$/lib/views/email_sign_in_page.dart" />
-        <option value="$PROJECT_DIR$/lib/views/email_sign_up_page.dart" />
-        <option value="$PROJECT_DIR$/lib/views/sign_in_page.dart" />
         <option value="$PROJECT_DIR$/lib/views/transfer_menu_page.dart" />
         <option value="$PROJECT_DIR$/lib/api.dart" />
-        <option value="$PROJECT_DIR$/lib/sign_in.dart" />
         <option value="$PROJECT_DIR$/test/test_api.dart" />
         <option value="$PROJECT_DIR$/lib/models/models.dart" />
         <option value="$PROJECT_DIR$/lib/models/latlng.dart" />
@@ -218,12 +249,19 @@
         <option value="$PROJECT_DIR$/test/test_transfer.dart" />
         <option value="$PROJECT_DIR$/lib/models/transfer.dart" />
         <option value="$PROJECT_DIR$/test/transfer_test.dart" />
+        <option value="$PROJECT_DIR$/lib/file_factory.dart" />
+        <option value="$PROJECT_DIR$/test/models/mock_config.dart" />
+        <option value="$PROJECT_DIR$/test/api_test.dart" />
+        <option value="$PROJECT_DIR$/lib/views/email_sign_up_page.dart" />
+        <option value="$PROJECT_DIR$/lib/views/sign_in_page.dart" />
+        <option value="$PROJECT_DIR$/lib/sign_in.dart" />
+        <option value="$PROJECT_DIR$/test/signin_test.dart" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-17" />
+    <option name="x" value="391" />
+    <option name="y" value="-25" />
     <option name="width" value="1101" />
     <option name="height" value="1090" />
   </component>
@@ -279,6 +317,12 @@
               <item name="leapfrog-mobile" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="leapfrog-mobile" type="b2602c69:ProjectViewProjectNode" />
+              <item name="leapfrog-mobile" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -297,11 +341,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ericd\CodeProjects\leapfrog-mobile\test\models" />
       <recent name="C:\Users\ericd\CodeProjects\leapfrog-mobile\lib\models" />
       <recent name="C:\Users\ericd\CodeProjects\leapfrog-mobile\lib\views" />
       <recent name="C:\Users\ericd\CodeProjects\leapfrog-mobile\lib" />
       <recent name="C:\Users\ericd\CodeProjects\leapfrog-mobile\test" />
-      <recent name="C:\Users\ericd\CodeProjects\leapfrog\ios\Runner" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -351,21 +395,21 @@
       <module name="" />
       <envs />
     </configuration>
-    <configuration name="Hash code should be different for objects with different initiating and completing users" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Hash code should be different for objects with different initiating and completing users" />
-      <option name="testFile" value="$PROJECT_DIR$/test/transfer_test.dart" />
+    <configuration name="Should not try to register user if nonexistent" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Should not try to register user if nonexistent" />
+      <option name="testFile" value="$PROJECT_DIR$/test/signin_test.dart" />
     </configuration>
-    <configuration name="Hash code should be different for objects with different initiating users" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Hash code should be different for objects with different initiating users" />
-      <option name="testFile" value="$PROJECT_DIR$/test/transfer_test.dart" />
+    <configuration name="Should return created if creation is successful" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="Should return created if creation is successful" />
+      <option name="testFile" value="$PROJECT_DIR$/test/signin_test.dart" />
     </configuration>
-    <configuration name="Should deserialize from JSON" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Should deserialize from JSON" />
-      <option name="testFile" value="$PROJECT_DIR$/test/transfer_test.dart" />
+    <configuration name="emailSignIn" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="emailSignIn" />
+      <option name="testFile" value="$PROJECT_DIR$/test/signin_test.dart" />
     </configuration>
-    <configuration name="Should serialize to JSON" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
-      <option name="testName" value="Should serialize to JSON" />
-      <option name="testFile" value="$PROJECT_DIR$/test/transfer_test.dart" />
+    <configuration name="emailSignUp" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
+      <option name="testName" value="emailSignUp" />
+      <option name="testFile" value="$PROJECT_DIR$/test/signin_test.dart" />
     </configuration>
     <configuration name="tests in test" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
       <option name="testDir" value="$PROJECT_DIR$/test" />
@@ -424,19 +468,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Flutter.sign_in_page.dart" />
-      <item index="1" class="java.lang.String" itemvalue="Flutter Test.tests in test" />
-      <item index="2" class="java.lang.String" itemvalue="Flutter Test.Hash code should be different for objects with different initiating users" />
-      <item index="3" class="java.lang.String" itemvalue="Flutter Test.Hash code should be different for objects with different initiating and completing users" />
-      <item index="4" class="java.lang.String" itemvalue="Flutter Test.Should serialize to JSON" />
-      <item index="5" class="java.lang.String" itemvalue="Flutter Test.Should deserialize from JSON" />
+      <item index="1" class="java.lang.String" itemvalue="Flutter Test.emailSignIn" />
+      <item index="2" class="java.lang.String" itemvalue="Flutter Test.Should not try to register user if nonexistent" />
+      <item index="3" class="java.lang.String" itemvalue="Flutter Test.Should return created if creation is successful" />
+      <item index="4" class="java.lang.String" itemvalue="Flutter Test.emailSignUp" />
+      <item index="5" class="java.lang.String" itemvalue="Flutter Test.tests in test" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Flutter Test.tests in test" />
-        <item index="1" class="java.lang.String" itemvalue="Flutter Test.Should deserialize from JSON" />
-        <item index="2" class="java.lang.String" itemvalue="Flutter Test.Should serialize to JSON" />
-        <item index="3" class="java.lang.String" itemvalue="Flutter Test.Hash code should be different for objects with different initiating and completing users" />
-        <item index="4" class="java.lang.String" itemvalue="Flutter Test.Hash code should be different for objects with different initiating users" />
+        <item index="1" class="java.lang.String" itemvalue="Flutter Test.Should return created if creation is successful" />
+        <item index="2" class="java.lang.String" itemvalue="Flutter Test.emailSignUp" />
+        <item index="3" class="java.lang.String" itemvalue="Flutter Test.emailSignIn" />
+        <item index="4" class="java.lang.String" itemvalue="Flutter Test.Should not try to register user if nonexistent" />
       </list>
     </recent_temporary>
   </component>
@@ -457,34 +501,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Hash_code_should_be_different_for_objects_with_different_completing_users - 2019.02.17 at 10h 27m 27s.xml">
-      <configuration name="Hash code should be different for objects with different completing users" configurationId="FlutterTestConfigType" />
+    <history-entry file="Should_return_created_if_creation_is_successful - 2019.02.17 at 14h 09m 50s.xml">
+      <configuration name="Should return created if creation is successful" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="Hash_code_should_be_different_for_objects_with_different_initiating_and_completing_users - 2019.02.17 at 10h 40m 57s.xml">
-      <configuration name="Hash code should be different for objects with different initiating and completing users" configurationId="FlutterTestConfigType" />
+    <history-entry file="Should_return_created_if_creation_is_successful - 2019.02.17 at 14h 10m 23s.xml">
+      <configuration name="Should return created if creation is successful" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="Hash_code_should_be_different_for_objects_with_different_initiating_users - 2019.02.17 at 10h 38m 45s.xml">
-      <configuration name="Hash code should be different for objects with different initiating users" configurationId="FlutterTestConfigType" />
+    <history-entry file="Should_return_created_if_creation_is_successful - 2019.02.17 at 14h 14m 59s.xml">
+      <configuration name="Should return created if creation is successful" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="Hash_code_should_be_equal_for_equal_objects - 2019.02.17 at 10h 26m 30s.xml">
-      <configuration name="Hash code should be equal for equal objects" configurationId="FlutterTestConfigType" />
+    <history-entry file="Should_return_created_if_creation_is_successful - 2019.02.17 at 14h 16m 39s.xml">
+      <configuration name="Should return created if creation is successful" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="Should_deserialize_from_JSON - 2019.02.17 at 10h 42m 43s.xml">
-      <configuration name="Should deserialize from JSON" configurationId="FlutterTestConfigType" />
+    <history-entry file="Should_return_created_if_creation_is_successful - 2019.02.17 at 14h 17m 20s.xml">
+      <configuration name="Should return created if creation is successful" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="Should_serialize_to_JSON - 2019.02.17 at 10h 42m 03s.xml">
-      <configuration name="Should serialize to JSON" configurationId="FlutterTestConfigType" />
+    <history-entry file="emailSignIn - 2019.02.17 at 14h 07m 18s.xml">
+      <configuration name="emailSignIn" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="hashCode - 2019.02.17 at 01h 23m 43s.xml">
-      <configuration name="hashCode" configurationId="FlutterTestConfigType" />
+    <history-entry file="emailSignIn - 2019.02.17 at 14h 07m 37s.xml">
+      <configuration name="emailSignIn" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="serialization - 2019.02.17 at 01h 23m 32s.xml">
-      <configuration name="serialization" configurationId="FlutterTestConfigType" />
+    <history-entry file="emailSignUp - 2019.02.17 at 14h 07m 51s.xml">
+      <configuration name="emailSignUp" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="tests_in_test - 2019.02.17 at 10h 34m 17s.xml">
+    <history-entry file="tests_in_test - 2019.02.17 at 14h 14m 26s.xml">
       <configuration name="tests in test" configurationId="FlutterTestConfigType" />
     </history-entry>
-    <history-entry file="tests_in_test - 2019.02.17 at 10h 37m 46s.xml">
+    <history-entry file="tests_in_test - 2019.02.17 at 14h 17m 38s.xml">
       <configuration name="tests in test" configurationId="FlutterTestConfigType" />
     </history-entry>
   </component>
@@ -501,7 +545,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Dart Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329849" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32171893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32171893" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25667828" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Flutter Outline" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39372823" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -514,7 +558,7 @@
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16216215" sideWeight="0.50406504" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37166086" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38327527" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Flutter Inspector" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -571,32 +615,11 @@
           <properties />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="60" />
+      <option name="time" value="89" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/android/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/android/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="49" column="20" lean-forward="true" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/flutter_signin_button/button_view.dart" />
     <entry file="file://$PROJECT_DIR$/ios/Runner/GoogleService-Info.plist">
       <provider selected="true" editor-type-id="text-editor">
@@ -709,34 +732,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/widget_test.dart" />
-    <entry file="file://$PROJECT_DIR$/lib/config.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="19" column="1" lean-forward="false" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/util.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/models/mock_config.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -749,23 +748,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/models/sign_in_method.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="22" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/models/sign_in_result.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="22" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/models/user.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="22" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="22" />
@@ -805,44 +788,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/email_sign_up_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="44" lean-forward="false" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/sign_in_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="37" lean-forward="false" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/views/transfer_menu_page.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="9" column="28" lean-forward="false" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/sign_in.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="117" column="53" lean-forward="false" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/api.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -852,7 +801,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding>
-            <element signature="e#128#160#0" expanded="true" />
+            <element signature="e#128#160#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -921,7 +870,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/usersnapshot_test.dart">
+    <entry file="file://$PROJECT_DIR$/test/models/usersnapshot_test.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1850">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -931,12 +880,122 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/transfer_test.dart">
+    <entry file="file://$PROJECT_DIR$/lib/config.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/file_factory.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="8" column="2" lean-forward="false" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/models/mock_config.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/models/transfer_test.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="122" column="20" lean-forward="true" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="20" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/sign_in_method.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/models/user.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="10" column="94" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/email_sign_up_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="158" column="41" lean-forward="true" selection-start-line="158" selection-start-column="41" selection-end-line="158" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/util.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="8" column="15" lean-forward="true" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/sign_in_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="82" column="104" lean-forward="false" selection-start-line="82" selection-start-column="104" selection-end-line="82" selection-end-column="104" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/api_test.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1050">
+          <caret line="254" column="7" lean-forward="true" selection-start-line="254" selection-start-column="7" selection-end-line="254" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/api.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="60" column="26" lean-forward="false" selection-start-line="60" selection-start-column="26" selection-end-line="60" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/sign_in.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="141" column="0" lean-forward="false" selection-start-line="137" selection-start-column="10" selection-end-line="141" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/signin_test.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="170" column="89" lean-forward="false" selection-start-line="170" selection-start-column="89" selection-end-line="170" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>

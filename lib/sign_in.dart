@@ -1,14 +1,13 @@
 import 'dart:async';
 import 'dart:convert' as convert;
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
+import 'package:leapfrog/file_factory.dart';
 import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
@@ -19,16 +18,15 @@ typedef Future<SignInResult> OAuthLoginMethod();
 class SignIn {
   final _api;
   final _config;
+  final _fileFactory;
 
-  SignIn(Api api, Config config) :
+  SignIn(Api api, Config config, FileFactory fileFactory) :
     _api = api,
-    _config = config;
+    _config = config,
+    _fileFactory = fileFactory;
 
   /// Calls Google's OAuth flow to sign in.
   Future<SignInResult> googleSignIn() async {
-    if(!_config.ready)
-      await _config.init();
-
     var _googleSignIn = new GoogleSignIn(
         scopes: ['email']
     );
@@ -60,7 +58,13 @@ class SignIn {
 
   /// Signs in with an [email] and [password].
   Future<SignInResult> emailSignIn(String email, String password) async {
-    var resultType = await _loginWithApi(email, null, "Email", false, password);
+    var resultType = await _loginWithApi(email, null, 'Email', false, password);
+    return new SignInResult(resultType, email);
+  }
+
+  /// Registers an account with an [email], [displayName], and [password].
+  Future<SignInResult> emailSignUp(String email, String displayName, String password) async {
+    var resultType = await _register(email, displayName, 'Email', password);
     return new SignInResult(resultType, email);
   }
 
@@ -72,13 +76,13 @@ class SignIn {
     if (!_config.ready)
       await _config.init();
 
-    var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
+    var file = await _fileFactory.getFile('login.json');
 
     if (await file.exists()) {
       file.open();
       var contents = convert.jsonDecode(await file.readAsString());
-      if (new DateTime.now().millisecondsSinceEpoch - contents["time"] < int.parse(_config.getValue('login_timeout'))) {
-        _cacheLogin(contents["email"]);
+      if (new DateTime.now().millisecondsSinceEpoch - contents['time'] < int.parse(_config.getValue('login_timeout'))) {
+        await _cacheLogin(contents["email"]);
         return contents["email"];
       }
     }
@@ -87,16 +91,13 @@ class SignIn {
 
   /// Saves a login to persistent storage. This allows the user to enter the
   /// app the next time without signing in again.
-  void _cacheLogin(String email) async {
-    if (!_config.ready)
-      await _config.init();
-
-    var file = new File("${(await getApplicationDocumentsDirectory()).path}/login.json");
+  Future<void> _cacheLogin(String email) async {
+    var file = await _fileFactory.getFile('login.json');
     await file.create(recursive: true);
 
     var contents = { "email": email, "time": new DateTime.now().millisecondsSinceEpoch };
 
-    file.writeAsString(convert.jsonEncode(contents));
+    await file.writeAsString(convert.jsonEncode(contents));
   }
 
   /// Calls the API to sign the user in. [tryRegister] indicates whether it should
@@ -112,7 +113,7 @@ class SignIn {
     var user = await _api.getUser(email);
 
     if (user != null && method.toUpperCase() == name(user.method) && password == user.passwordHash) {
-      _cacheLogin(email);
+      await _cacheLogin(email);
       return SignInResultType.SIGNED_IN;
     }
     else if (user != null && method.toUpperCase() != name(user.method)) {
@@ -122,17 +123,20 @@ class SignIn {
       return SignInResultType.INCORRECT_PASSWORD;
     }
     else if (tryRegister) {
-      var result = await _api.registerUser(email, displayName, method, password);
-      if (result == SignInResultType.CREATED) {
-        _cacheLogin(email);
-        return SignInResultType.CREATED;
-      }
-      else {
-        return result;
-      }
+      _register(email, displayName, method, password);
+    }
+
+    return SignInResultType.NONEXISTENT_USER;
+  }
+
+  Future<SignInResultType> _register(String email, String displayName, String method, [String password]) async {
+    var result = await _api.registerUser(email, displayName, method, password);
+    if (result == SignInResultType.CREATED) {
+      await _cacheLogin(email);
+      return SignInResultType.CREATED;
     }
     else {
-      return SignInResultType.NONEXISTENT_USER;
+      return result;
     }
   }
 }

@@ -11,8 +11,6 @@ import 'package:leapfrog/config.dart';
 import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
-part 'models/mock_config.dart';
-
 var testEmail = 'the@examiner.com';
 var testDisplayName = 'The Examiner';
 var testLeapfrogId = 'fakenews';
@@ -27,6 +25,8 @@ var testPosition = {
 var postData;
 var testTransfers;
 var testLeapfrogs;
+
+class MockConfig extends Mock implements Config {}
 
 void main() {
   var _api;

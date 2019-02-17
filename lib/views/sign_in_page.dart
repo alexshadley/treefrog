@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
+import 'package:leapfrog/file_factory.dart';
 import 'package:leapfrog/models/models.dart';
 import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/views/email_sign_in_page.dart';
@@ -33,7 +34,7 @@ class _SignInPageState extends State<SignInPage> {
   _SignInPageState(Api api, Config config) :
     _config = config,
     _api = api,
-    _signIn = new SignIn(api, config),
+    _signIn = new SignIn(api, config, new FileFactory()),
     _ready = config.ready;
 
   /// Initializes the sign-in page state.
@@ -79,7 +80,7 @@ class _SignInPageState extends State<SignInPage> {
 
   /// Opens the email sign-up page.
   void _emailSignUp() {
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new SignUpPage(_config)));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new SignUpPage(_config, _signIn)));
   }
 
   /// Builds the sign-in page [Widget].
