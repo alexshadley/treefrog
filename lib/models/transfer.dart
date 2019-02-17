@@ -34,8 +34,8 @@ class Transfer {
         initiatingUser == other.initiatingUser && location == other.location;
   }
 
-  /// The hash code for a [Transfer] is computed by XOR'ing the hashes for its initiating user,
-  /// completing user, id, and location.
+  /// The hash code for a [Transfer] is computed by averaging the hash codes for the initiating and completing users
+  /// and XOR'ing those with the location hash and the sum of bytes in [id]
   int get hashCode {
     var idHash = 0;
     utf8.encode(id).forEach((e) => idHash += e);

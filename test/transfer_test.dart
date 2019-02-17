@@ -77,14 +77,51 @@ void main() {
     test('Hash code should be equal for equal objects', () {
       var equalTransfer = new Transfer(testUser2, testTransferId, testUser2, testLatLng2);
 
-      expect(equalTransfer.hashCode, equals(testTransfer.hashCode));
+      expect(testTransfer.hashCode, equals(equalTransfer.hashCode));
     });
 
     test('Hash code should be different for objects with different completing users', () {
       var differentUser = new UserSnapshot('fake@email.com', 'notthesame', 'notthesame');
       var differentTransfer = new Transfer(differentUser, testTransferId, testUser, testLatLng2);
 
-      expect(differentTransfer.hashCode, isNot(equals(testTransfer.hashCode)));
+      expect(testTransfer.hashCode, isNot(equals(differentTransfer.hashCode)));
+    });
+
+    test('Hash code should be different for objects with different IDs', () {
+      var differentTransfer = new Transfer(testUser2, 'notthesame', testUser2, testLatLng2);
+
+      expect(testTransfer.hashCode, isNot(equals(differentTransfer.hashCode)));
+    });
+
+    test('Hash code should be different for objects with different initiating users', () {
+      var differentUser = new UserSnapshot('fake@email.com', 'notthesame', 'notthesame');
+      var differentTransfer = new Transfer(testUser2, testTransferId, differentUser, testLatLng2);
+
+      expect(testTransfer.hashCode, isNot(equals(differentTransfer.hashCode)));
+    });
+
+    test('Hash code should be different for objects with different locations', () {
+      var differentLatLng = new LatLng(5.0, 4.0);
+      var differentTransfer = new Transfer(testUser, testTransferId, testUser, differentLatLng);
+
+      expect(testTransfer.hashCode, isNot(equals(differentTransfer.hashCode)));
+    });
+
+    test('Hash code should be different for objects with different initiating and completing users', () {
+      var differentUser = new UserSnapshot('fake@email.com', 'notthesame', 'notthesame');
+      var differentTransfer = new Transfer(differentUser, testTransferId, differentUser, testLatLng2);
+
+      expect(testTransfer.hashCode, isNot(equals(differentUser.hashCode)));
+    });
+  });
+
+  group('serialization', () {
+    test('Should serialize to JSON', () {
+      expect(testTransfer.toJson(), equals(transferJson));
+    });
+
+    test('Should deserialize from JSON', () {
+      expect(Transfer.fromJson(transferJson), equals(testTransfer));
     });
   });
 }
