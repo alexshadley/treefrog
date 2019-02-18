@@ -18,6 +18,11 @@ class Api {
 
   var _ready = false;
 
+  final headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+
   /// Gets a user from the API. This returns a [User] if a user exists with the
   /// given [email]; otherwise, it returns `null`.
   Future<User> getUser(String email) async {
@@ -56,8 +61,7 @@ class Api {
       body = { 'email': email, 'display_name': displayName, 'method': method };
     }
 
-    var url = _config.getValue("api_url");
-    var response = await http.post("${_config.getValue("api_url")}/users/", body: body);
+    var response = await http.post("${_config.getValue("api_url")}/users/", body: convert.jsonEncode(body), headers: headers);
 
     if (response.statusCode == 201)
       return SignInResultType.CREATED;
@@ -81,7 +85,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/", body: convert.jsonEncode(body), headers: headers);
     
     if (response.statusCode == 201) {
       var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
@@ -108,7 +112,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
+    var response = await http.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: convert.jsonEncode(body), headers: headers);
     
     if (response.statusCode == 201) {
       return ConfirmationResult.SUCCESS;
