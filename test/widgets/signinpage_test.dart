@@ -35,7 +35,8 @@ void main() {
 
   setUp(() {
     config = new MockConfig();
-    when(config.ready).thenReturn(true);
+    when(config.ready).thenReturn(false);
+    when(config.init()).thenAnswer((_) async => {});
     when(config.getValue('app_name')).thenReturn('Leapfrog');
     when(config.getValue('primary_color')).thenReturn('FF55efc4');
     when(config.getValue('form_submit_margin')).thenReturn(20.0);
@@ -45,7 +46,9 @@ void main() {
     when(signIn.checkCache()).thenAnswer((_) async => '');
   });
 
-  Future<void> createPage(WidgetTester tester) async {
+  Future<void> createPage(WidgetTester tester, {bool configInitialized: true}) async {
+    when(config.ready).thenReturn(configInitialized);
+
     await tester.pumpWidget(new MediaQuery(
         data: new MediaQueryData(),
         child: new MaterialApp(home: new SignInPage(
@@ -58,6 +61,12 @@ void main() {
         ))
     ));
   }
+
+  testWidgets('Should initalize config if necessary', (WidgetTester tester) async {
+    await createPage(tester, configInitialized: false);
+
+    verify(config.init()).called(1);
+  });
 
   testWidgets('Can click on Google Sign In Button', (WidgetTester tester) async {
     await createPage(tester);

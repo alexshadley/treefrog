@@ -7,6 +7,7 @@ class FileFactory {
   /// Gets the file corresponding to [relativePath], where the base directory is
   /// the application documents directory.
   Future<File> getFile(String relativePath) async {
-    return new File('${(await getApplicationDocumentsDirectory())}/$relativePath');
+    var path = '${(await getApplicationDocumentsDirectory()).path}/$relativePath';
+    return new File('${(await getApplicationDocumentsDirectory()).path}/$relativePath');
   }
 }

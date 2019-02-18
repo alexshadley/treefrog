@@ -155,13 +155,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: new Color(int.parse(_config.getValue('form_button_background'), radix: 16)),
                       onPressed: () {
                         if (_formKey.currentState.validate())
-                          _signIn.emailSignUp(_emailController.text, '${_firstNameController.text} ${_lastNameController.text}', 'Email', _passwordController.text)
+                          _signIn.emailSignUp(_emailController.text, '${_firstNameController.text} ${_lastNameController.text}', _passwordController.text)
                           .then((result){
                             setState(() {
-                              if (result == SignInResultType.CREATED) {
+                              if (result.resultType == SignInResultType.CREATED) {
                                 Navigator.push(context, new MaterialPageRoute(builder: (builder) => new Menu(_emailController.text, _config)));
                               }
-                              else if (result == SignInResultType.DUPLICATE_EMAIL) {
+                              else if (result.resultType == SignInResultType.DUPLICATE_EMAIL) {
                                 setState(() {
                                   _uniquenessError = 'Email already belongs to an account';
                                 });

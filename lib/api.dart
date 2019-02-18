@@ -13,6 +13,11 @@ class Api {
   final _config;
   final _httpClient;
 
+  var headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+
   /// Initializes a new API class. [http.BaseClient] is a base class, which allows
   /// for mocking the HTTP client.
   Api(http.BaseClient httpClient, Config config) :
@@ -53,7 +58,7 @@ class Api {
       body = { 'email': email, 'display_name': displayName, 'method': method };
     }
 
-    var response = await _httpClient.post("${_config.getValue("api_url")}/users/", body: body);
+    var response = await _httpClient.post("${_config.getValue("api_url")}/users/", body: convert.jsonEncode(body), headers: headers);
 
     if (response.statusCode == 201)
       return SignInResultType.CREATED;
@@ -75,7 +80,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await _httpClient.post("${_config.getValue("api_url")}/pendingtransfers/", body: body);
+    var response = await _httpClient.post("${_config.getValue("api_url")}/pendingtransfers/", body: convert.jsonEncode(body), headers: headers);
     
     if (response.statusCode == 201) {
       var responseJson = convert.jsonDecode(convert.utf8.decode(response.bodyBytes.toList()));
@@ -100,7 +105,7 @@ class Api {
         'longitude': position['longitude'].toString()
       };
 
-    var response = await _httpClient.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: body);
+    var response = await _httpClient.post("${_config.getValue("api_url")}/pendingtransfers/$transferCode/confirm", body: convert.jsonEncode(body), headers: headers);
     
     if (response.statusCode == 201) {
       return ConfirmationResult.SUCCESS;
