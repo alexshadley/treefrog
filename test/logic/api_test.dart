@@ -285,14 +285,14 @@ Future<Response> requestHandler(Request request) async {
 
   else if (request.method.toUpperCase() == 'POST' &&
       request.url.path == '/users/') {
-    postData = Uri.splitQueryString(request.body);
+    postData = convert.jsonDecode(request.body);
 
     return new Response('', 201);
   }
 
   else if (request.method.toUpperCase() == 'POST' &&
       request.url.path == '/pendingtransfers/') {
-    postData = Uri.splitQueryString(request.body);
+    postData = convert.jsonDecode(request.body);
 
     var response = {
       'id': testTransferId,
@@ -305,7 +305,7 @@ Future<Response> requestHandler(Request request) async {
 
   else if (request.method.toUpperCase() == 'POST' &&
       request.url.path == '/pendingtransfers/$testTransferId/confirm') {
-    postData = Uri.splitQueryString(request.body);
+    postData = convert.jsonDecode(request.body);
 
     return new Response('', 201);
   }
