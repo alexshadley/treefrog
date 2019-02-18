@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 
 void main() {
   group('name', () {

@@ -1,4 +1,6 @@
-part of 'models.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'latlng.g.dart';
 
 /// A latitude, longitude point.
 @JsonSerializable(nullable: false)

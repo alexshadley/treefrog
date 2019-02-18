@@ -1,5 +1,3 @@
-part of 'models.dart';
-
 /// Possible results of a user sign-in.
 enum SignInResultType {
   /// A new account was created for the user.

@@ -1,4 +1,11 @@
-part of 'models.dart';
+import 'dart:convert';
+
+import 'package:json_annotation/json_annotation.dart';
+
+import 'package:leapfrog/models/latlng.dart';
+import 'package:leapfrog/models/user_snapshot.dart';
+
+part 'transfer.g.dart';
 
 /// A transfer stored in the database.
 @JsonSerializable(nullable: false)

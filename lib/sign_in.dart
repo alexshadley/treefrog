@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
 import 'package:leapfrog/file_factory.dart';
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// A type corresponding to any function that performs OAuth login.

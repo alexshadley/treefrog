@@ -11,9 +11,7 @@ class Config {
   /// Initializes the class. NOTE: This MUST be called.
   Future<void> init() async {
     ready = true;
-    return new Future<void>(() async {
-      _parsed = jsonDecode(await rootBundle.loadString("res/config.json"));
-    });
+    _parsed = jsonDecode(await rootBundle.loadString("res/config.json"));
   }
 
   /// Gets a value from the config file.

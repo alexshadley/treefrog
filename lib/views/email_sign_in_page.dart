@@ -3,7 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/util.dart';
 import 'package:leapfrog/views/menu.dart';

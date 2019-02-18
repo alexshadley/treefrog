@@ -5,7 +5,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
 /// Interfaces with the app's backend API.

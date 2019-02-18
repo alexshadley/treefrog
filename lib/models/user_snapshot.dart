@@ -1,4 +1,9 @@
-part of 'models.dart';
+import 'dart:convert';
+import 'dart:math' as math;
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user_snapshot.g.dart';
 
 /// A snapshot of a user at a point in time.
 @JsonSerializable(nullable: false)

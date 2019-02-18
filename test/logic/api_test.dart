@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 import 'package:leapfrog/util.dart' as util;
 
 var testEmail = 'the@examiner.com';

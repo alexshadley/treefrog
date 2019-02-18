@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 import 'package:leapfrog/views/qr_page.dart';
 
 class TransferMenuPage extends StatefulWidget {

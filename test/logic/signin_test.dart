@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 
 import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/models.dart';
+import 'package:leapfrog/models.dart';
 import 'package:leapfrog/file_factory.dart';
 import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/util.dart' as util;
