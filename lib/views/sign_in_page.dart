@@ -73,7 +73,7 @@ class _SignInPageState extends State<SignInPage> {
     });
 
     if (!_ready) {
-      _config.init().then(() {
+      _config.init().then((result) {
         setState(() {
           _ready = true;
         });
