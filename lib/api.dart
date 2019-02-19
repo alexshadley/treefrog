@@ -24,6 +24,11 @@ class Api {
     _httpClient = httpClient,
     _config = config;
 
+  final headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
+
   /// Gets a user from the API. This returns a [User] if a user exists with the
   /// given [email]; otherwise, it returns `null`.
   Future<User> getUser(String email) async {
