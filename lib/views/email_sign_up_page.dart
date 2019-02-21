@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 
-import 'package:leapfrog/api.dart';
 import 'package:leapfrog/config.dart';
-import 'package:leapfrog/models/sign_in_result.dart';
+import 'package:leapfrog/models.dart';
+import 'package:leapfrog/sign_in.dart';
 import 'package:leapfrog/util.dart';
 import 'package:leapfrog/views/menu.dart';
 
 /// A page where the user can sign up using an email and password.
 class SignUpPage extends StatefulWidget {
-  final Config _config;
+  final _config;
+  final _signIn;
 
   /// Initializes the sign up page.
   /// [config] **must** have had its `init()` method called prior to this.
-  SignUpPage(Config config) :
-    _config = config;
+  SignUpPage(Config config, SignIn signIn) :
+    _config = config,
+    _signIn = signIn;
 
   /// Creates the page state.
   @override
-  _SignUpPageState createState() => new _SignUpPageState(_config);
+  _SignUpPageState createState() => new _SignUpPageState(_config, _signIn);
 }
 
 /// The state of the sign up page.
 class _SignUpPageState extends State<SignUpPage> {
   final _config;
-  final _api;
+  final _signIn;
   final _scaffold = new GlobalKey<ScaffoldState>();
   final _formKey = new GlobalKey<FormState>();
   final _firstNameController = new TextEditingController();
@@ -31,13 +33,13 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
 
-  var _uniquenessError = "";
+  var _uniquenessError = '';
 
   /// Initializes the page state.
   /// [config] **must** have had its `init()` method called prior to this.
-  _SignUpPageState(Config config) :
+  _SignUpPageState(Config config, SignIn signIn) :
     _config = config,
-    _api = new Api();
+    _signIn = signIn;
 
   /// Initializes the page state.
   @override
@@ -46,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     _emailController.addListener((){
       setState(() {
-        _uniquenessError = "";
+        _uniquenessError = '';
       });
     });
   }
@@ -67,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return new Scaffold(
       key: _scaffold,
       body: new Container(
-        decoration: new BoxDecoration(color: new Color(int.parse(_config.getValue("primary_color"), radix: 16))),
+        decoration: new BoxDecoration(color: new Color(int.parse(_config.getValue('primary_color'), radix: 16))),
         child: new Center(
           child: new Form(
             key: _formKey,
@@ -80,11 +82,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _firstNameController,
                     textCapitalization: TextCapitalization.words,
                     decoration: new InputDecoration(
-                      labelText: "First Name"
+                      labelText: 'First Name'
                     ),
                     validator: (text) {
                       if (text.isEmpty)
-                        return "Please enter your first name.";
+                        return 'Please enter your first name.';
                     },
                   )
                 ),
@@ -94,11 +96,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _lastNameController,
                     textCapitalization: TextCapitalization.words,
                     decoration: new InputDecoration(
-                      labelText: "Last Name"
+                      labelText: 'Last Name'
                     ),
                     validator: (text) {
                       if (text.isEmpty)
-                        return "Please enter your last name.";
+                        return 'Please enter your last name.';
                     },
                   )
                 ),
@@ -108,12 +110,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: new InputDecoration(
-                      labelText: "Email",
+                      labelText: 'Email',
                       errorText: _uniquenessError.isNotEmpty ? _uniquenessError : null
                     ),
                     validator: (text) {
                       if (!isValidEmail(text))
-                        return "Please enter a valid email address.";
+                        return 'Please enter a valid email address.';
                     },
                   )
                 ),
@@ -123,11 +125,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: new InputDecoration(
-                      labelText: "Password"
+                      labelText: 'Password'
                     ),
                     validator: (text) {
                       if (!isValidPassword(text))
-                        return "Please enter a nonempty password.";
+                        return 'Please enter a nonempty password.';
                     },
                   )
                 ),
@@ -136,39 +138,39 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: new TextFormField(
                     obscureText: true,
                     decoration: new InputDecoration(
-                      labelText: "Confirm Password"
+                      labelText: 'Confirm Password'
                     ),
                     validator: (text) {
                       if (text != _passwordController.text)
-                        return "Passwords must match.";
+                        return 'Passwords must match.';
                       if (!isValidPassword(text))
-                        return "Please enter a nonempty password.";
+                        return 'Please enter a nonempty password.';
                     }
                   )
                 ),
                 new Container(
-                  margin: new EdgeInsets.fromLTRB(0.0, _config.getValue("form_submit_margin"), 0.0, 0.0),
+                  margin: new EdgeInsets.fromLTRB(0.0, _config.getValue('form_submit_margin'), 0.0, 0.0),
                   child: new RaisedButton(
-                      child: new Text("Register"),
-                      color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
+                      child: new Text('Register'),
+                      color: new Color(int.parse(_config.getValue('form_button_background'), radix: 16)),
                       onPressed: () {
                         if (_formKey.currentState.validate())
-                          _api.registerUser(_emailController.text, "${_firstNameController.text} ${_lastNameController.text}", "Email", _passwordController.text)
+                          _signIn.emailSignUp(_emailController.text, '${_firstNameController.text} ${_lastNameController.text}', _passwordController.text)
                           .then((result){
                             setState(() {
-                              if (result == SignInResultType.CREATED) {
+                              if (result.resultType == SignInResultType.CREATED) {
                                 Navigator.push(context, new MaterialPageRoute(builder: (builder) => new Menu(_emailController.text, _config)));
                               }
-                              else if (result == SignInResultType.DUPLICATE_EMAIL) {
+                              else if (result.resultType == SignInResultType.DUPLICATE_EMAIL) {
                                 setState(() {
-                                  _uniquenessError = "Email already belongs to an account";
+                                  _uniquenessError = 'Email already belongs to an account';
                                 });
                               }
                               else {
                                 setState(() {
-                                  _uniquenessError = "";
+                                  _uniquenessError = '';
                                 });
-                                _scaffold.currentState.showSnackBar(new SnackBar(content: new Text("Registration failed.")));
+                                _scaffold.currentState.showSnackBar(new SnackBar(content: new Text('Registration failed.')));
                               }
                             });
                           });

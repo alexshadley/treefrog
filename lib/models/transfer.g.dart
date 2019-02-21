@@ -15,8 +15,8 @@ Transfer _$TransferFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$TransferToJson(Transfer instance) => <String, dynamic>{
-      'completing': instance.completingUser,
+      'completing': instance.completingUser.toJson(),
       'id': instance.id,
-      'initiating': instance.initiatingUser,
-      'location': instance.location
+      'initiating': instance.initiatingUser.toJson(),
+      'location': instance.location.toJson()
     };

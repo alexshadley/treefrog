@@ -9,3 +9,5 @@ build/
 .flutter-plugins
 
 res/config.json
+
+.idea/workspace.xml
