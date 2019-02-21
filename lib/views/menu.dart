@@ -82,6 +82,7 @@ class _MenuState extends State<Menu> {
             'NAME', // TODO Replace with name of user's frog
             style: TextStyle(fontSize: 30.0),
           ),
+          Container(height: 20),
           SizedBox( // Vertical ListView
             height: 300,
             child: _buildTransfers(),
@@ -92,28 +93,24 @@ class _MenuState extends State<Menu> {
   }
 
   /// Builds the list of transfers of user's frog
-  ///   TODO Change to recent transfers
   Widget _buildTransfers() {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return Container(
-          width: 50,
-          height: 50,
-          alignment: Alignment.center,
-          child: Text(index.toString()),
-        );
-      },
+    return MediaQuery.removePadding( // Add this to get rid of weird header inherit with ListView
+      context: context,
+      removeTop: true,
+      // TODO Change to building recent transfers
+      child: ListView.builder(
+        itemCount: 21,
+        itemBuilder: (context, i) {
+          if (i.isEven) return Divider();
+          return Container(
+            width: 50,
+            height: 25,
+            alignment: Alignment.center,
+            child: Text('Test $i'),
+          );
+        },
+      )
     );
-    // return ListView.builder(
-    //   padding: const EdgeInsets.all(16.0),
-    //   itemBuilder: (context, i) {
-    //     if (i.isOdd) return Divider();
-
-    //     return ListTile(
-    //       title: Text('Test $i'),
-    //     );
-    //   });
   }
 
   /// Builds the column on the right side of the home screen
@@ -126,8 +123,8 @@ class _MenuState extends State<Menu> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          _buildRouteBtn('Map', new MapPage(_config, _email)),
-          _buildRouteBtn('Transfer', new TransferMenuPage(_email, _config)),
+          _buildRouteBtn('Map', new MaterialPageRoute(builder: (context) => new MapPage(_config, _email))),
+          _buildRouteBtn('Transfer', new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config))),
         ],
       )
     );
@@ -136,7 +133,7 @@ class _MenuState extends State<Menu> {
   /// Builds a button to handle routing to a different page
   ///   name - The text on the button
   ///   page - The page to route to
-  Widget _buildRouteBtn(String name, StatefulWidget page) {
+  Widget _buildRouteBtn(String name, PageRoute route) {
     return new Container(
       margin: new EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 40.0),
       child: new SizedBox(
@@ -145,7 +142,7 @@ class _MenuState extends State<Menu> {
           color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
           splashColor: Colors.lightGreen,
           child: new Text(name, style: TextStyle(fontSize: 20.0)),
-          onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => page)),
+          onPressed: () => Navigator.push(context, route),
         ),
       ),
     );
