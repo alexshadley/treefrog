@@ -82,17 +82,17 @@ void main() {
     ];
   });
   group('getUser', () {
-    test('Should initialize config if not ready', () async {
+    test('should initialize config if not ready', () async {
       await _api.getUser('asdf@email.com');
       verify(_config.ready).called(1);
     });
 
-    test('Should return null if email is invalid', () async {
+    test('should return null if email is invalid', () async {
       var result = await _badRequestApi.getUser('asdf@gmail.com');
       expect(result, equals(null));
     });
 
-    test('Should return correct user data if email is valid', () async {
+    test('should return correct user data if email is valid', () async {
       var user = await _api.getUser(testEmail);
 
       expect(user.displayName, equals(testDisplayName));
@@ -104,12 +104,12 @@ void main() {
   });
 
   group('registerUser', () {
-    test('Should initialize config if not ready', () async {
+    test('should initialize config if not ready', () async {
       await _api.getUser('asdf@email.com');
       verify(_config.ready).called(1);
     });
 
-    test('Should post correct data with no password specified', () async {
+    test('should post correct data with no password specified', () async {
       await _api.registerUser(testEmail, testDisplayName, testMethod);
 
       var expected = {
@@ -121,7 +121,7 @@ void main() {
       expect(postData, equals(expected));
     });
 
-    test('Should post correct data with password specified', () async {
+    test('should post correct data with password specified', () async {
       await _api.registerUser(testEmail, testDisplayName, testMethod, testPasswordHash);
 
       var expected = {
@@ -134,29 +134,29 @@ void main() {
       expect(postData, equals(expected));
     });
 
-    test('Should return CREATED for successful creation', () async {
+    test('should return CREATED for successful creation', () async {
       var result = await _api.registerUser(testEmail, testDisplayName, testMethod, testPasswordHash);
       expect(result, equals(SignInResultType.CREATED));
     });
 
-    test('Should return DUPLICATE_EMAIL for Bad Request API response', () async {
+    test('should return DUPLICATE_EMAIL for Bad Request API response', () async {
       var result = await _badRequestApi.registerUser(testEmail, testDisplayName, testMethod, testPasswordHash);
       expect(result, equals(SignInResultType.DUPLICATE_EMAIL));
     });
 
-    test('Should return FAILURE for other response codes', () async {
+    test('should return FAILURE for other response codes', () async {
       var result = await _notFoundApi.registerUser(testEmail, testDisplayName, testMethod, testPasswordHash);
       expect(result, equals(SignInResultType.FAILURE));
     });
   });
 
   group('initiateTransfer', () {
-    test('Should initialize config if not ready', () async {
+    test('should initialize config if not ready', () async {
       await _api.initiateTransfer(testEmail, testPosition);
       verify(_config.ready).called(1);
     });
 
-    test('Should post correct email and location', () async {
+    test('should post correct email and location', () async {
       await _api.initiateTransfer(testEmail, testPosition);
 
       var expected = {
@@ -168,14 +168,14 @@ void main() {
       expect(postData, equals(expected));
     });
 
-    test('Should return PendingTransfer with correct location and ID if successful', () async {
+    test('should return PendingTransfer with correct location and ID if successful', () async {
       var pendingTransfer = await _api.initiateTransfer(testEmail, testPosition);
 
       expect(pendingTransfer.id, equals(testTransferId));
       expect(pendingTransfer.position, equals(testPosition));
     });
 
-    test('Should return null if PendingTransfer creation is unsuccessful', () async {
+    test('should return null if PendingTransfer creation is unsuccessful', () async {
       var result = await _badRequestApi.initiateTransfer(testEmail, testPosition);
 
       expect(result, equals(null));
@@ -183,12 +183,12 @@ void main() {
   });
 
   group('confirmTransfer', () {
-    test('Should initialize config if not ready', () async {
+    test('should initialize config if not ready', () async {
       await _api.confirmTransfer(testTransferId, testEmail, testPosition);
       verify(_config.ready).called(1);
     });
 
-    test('Should post correct data', () async {
+    test('should post correct data', () async {
       await _api.confirmTransfer(testTransferId, testEmail, testPosition);
 
       var expected = {
@@ -200,24 +200,24 @@ void main() {
       expect(postData, equals(expected));
     });
 
-    test('Should return SUCCESS if confirmation is successful', () async {
+    test('should return SUCCESS if confirmation is successful', () async {
       var result = await _api.confirmTransfer(testTransferId, testEmail, testPosition);;
       expect(result, ConfirmationResult.SUCCESS);
     });
 
-    test('Should return FAILURE if confirmation isn\'t successful', () async {
+    test('should return FAILURE if confirmation isn\'t successful', () async {
       var result = await _badRequestApi.confirmTransfer(testTransferId, testEmail, testPosition);
       expect(result, ConfirmationResult.FAILURE);
     });
   });
 
   group('getTransfersForFrog', () {
-    test('Should initialize config if not ready', () async {
+    test('should initialize config if not ready', () async {
       await _api.getTransfersForFrog(testLeapfrogId);
       verify(_config.ready).called(1);
     });
 
-    test('Should return correct transfer data if request is successful', () async {
+    test('should return correct transfer data if request is successful', () async {
       var result = await _api.getTransfersForFrog(testLeapfrogId);
       var jsonResult = [];
       
@@ -228,14 +228,14 @@ void main() {
       expect(jsonResult, equals(testTransfers));
     });
 
-    test('Should return empty list if frog has no transfers', () async {
+    test('should return empty list if frog has no transfers', () async {
       testTransfers = [];
       var result = await _api.getTransfersForFrog(testLeapfrogId);
 
       expect(result, equals([]));
     });
 
-    test('Should return null if request is unsuccessful', () async {
+    test('should return null if request is unsuccessful', () async {
       var result = await _badRequestApi.getTransfersForFrog(testLeapfrogId);
 
       expect(result, equals(null));
@@ -243,25 +243,25 @@ void main() {
   });
 
   group('getLeapfrogsForUser', () {
-    test('Should initialize config if not ready', () async {
+    test('should initialize config if not ready', () async {
       await _api.getLeapfrogsForUser(testEmail);
       verify(_config.ready).called(1);
     });
 
-    test('Should return correct leapfrog data if request is successful', () async {
+    test('should return correct leapfrog data if request is successful', () async {
       var result = await _api.getLeapfrogsForUser(testEmail);
 
       expect(result, equals(testLeapfrogs));
     });
 
-    test('Should return empty list if user has no frogs', () async {
+    test('should return empty list if user has no frogs', () async {
       testLeapfrogs = [];
       var result = await _api.getLeapfrogsForUser(testEmail);
 
       expect(result, equals([]));
     });
 
-    test('Should return null if request is unsuccessful', () async {
+    test('should return null if request is unsuccessful', () async {
       var result = await _badRequestApi.getLeapfrogsForUser(testEmail);
 
       expect(result, equals(null));

@@ -62,7 +62,7 @@ void main() {
     ));
   }
 
-  testWidgets('Should initalize config if necessary', (WidgetTester tester) async {
+  testWidgets('should initalize config if necessary', (WidgetTester tester) async {
     await createPage(tester, configInitialized: false);
 
     verify(config.init()).called(1);

@@ -80,11 +80,11 @@ void main() {
       };
     });
 
-    test('Should serialize to JSON', () {
+    test('should serialize to JSON', () {
       expect(snapshot.toJson(), equals(json));
     });
 
-    test('Should deserialize from JSON', () {
+    test('should deserialize from JSON', () {
       expect(UserSnapshot.fromJson(json), equals(snapshot));
     });
   });

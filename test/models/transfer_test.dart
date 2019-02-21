@@ -116,11 +116,11 @@ void main() {
   });
 
   group('serialization', () {
-    test('Should serialize to JSON', () {
+    test('should serialize to JSON', () {
       expect(testTransfer.toJson(), equals(transferJson));
     });
 
-    test('Should deserialize from JSON', () {
+    test('should deserialize from JSON', () {
       expect(Transfer.fromJson(transferJson), equals(testTransfer));
     });
   });

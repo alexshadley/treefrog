@@ -61,11 +61,11 @@ void main() {
       };
     });
 
-    test('Should serialize to JSON', () {
+    test('should serialize to JSON', () {
       expect(testLatLng.toJson(), equals(json));
     });
 
-    test('Should deserialize from JSON', () {
+    test('should deserialize from JSON', () {
       expect(LatLng.fromJson(json), equals(testLatLng));
     });
   });

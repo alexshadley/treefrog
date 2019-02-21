@@ -74,35 +74,35 @@ void main() {
   });
 
   group('checkCache', () {
-    test('Should call config.init if not ready', () async {
+    test('should call config.init if not ready', () async {
       when(_config.getValue('login_timeout')).thenReturn('1000');
 
       await _signIn.checkCache();
       verify(_config.ready).called(1);
     });
 
-    test('Should return email if login is cached', () async {
+    test('should return email if login is cached', () async {
       when(_config.getValue('login_timeout')).thenReturn('20000');
 
       var email = await _signIn.checkCache();
       expect(email, equals(testEmail));
     });
 
-    test('Should return empty email if login is not cached', () async {
+    test('should return empty email if login is not cached', () async {
       when(_config.getValue('login_timeout')).thenReturn('500');
 
       var email = await _signIn.checkCache();
       expect(email, equals(''));
     });
 
-    test('Should return empty email if cache file does not exist', () async {
+    test('should return empty email if cache file does not exist', () async {
       when(_file.exists()).thenAnswer((_) async => false);
 
       var email = await _signIn.checkCache();
       expect(email, equals(''));
     });
 
-    test('Should update login cache if existing cache is valid', () async {
+    test('should update login cache if existing cache is valid', () async {
       when(_config.getValue('login_timeout')).thenReturn('20000');
 
       await _signIn.checkCache();
@@ -120,7 +120,7 @@ void main() {
       when(_config.getValue('login_timeout')).thenReturn('20000');
     });
 
-    test('Should sign in if email, password, and method are correct', () async {
+    test('should sign in if email, password, and method are correct', () async {
       when(_api.getUser(testEmail)).thenAnswer((_) async => new User(testEmail, 'id', 'display name', util.hash(testPassword), 'Email'));
       var result = await _signIn.emailSignIn(testEmail, testPassword);
 
@@ -129,7 +129,7 @@ void main() {
       expect(_file.count, equals(1));
     });
 
-    test('Should return incorrect method if method is incorrect', () async {
+    test('should return incorrect method if method is incorrect', () async {
       when(_api.getUser(testEmail)).thenAnswer((_) async => new User(testEmail, 'id', 'display name', util.hash(testPassword), 'Google'));
 
       var result = await _signIn.emailSignIn(testEmail, testPassword);
@@ -138,7 +138,7 @@ void main() {
       expect(_file.count, equals(0));
     });
 
-    test('Should return incorrect password if password is incorrect', () async {
+    test('should return incorrect password if password is incorrect', () async {
       when(_api.getUser(testEmail)).thenAnswer((_) async => new User(testEmail, 'id', 'display name', util.hash('a fake password'), 'Email'));
 
       var result = await _signIn.emailSignIn(testEmail, testPassword);
@@ -147,7 +147,7 @@ void main() {
       expect(_file.count, equals(0));
     });
 
-    test('Should not try to register user if nonexistent', () async {
+    test('should not try to register user if nonexistent', () async {
       when(_api.getUser(testEmail)).thenAnswer((_) async => null);
 
       var result = await _signIn.emailSignIn(testEmail, testPassword);
@@ -163,7 +163,7 @@ void main() {
       when(_config.getValue('login_timeout')).thenReturn('20000');
     });
 
-    test('Should return created if creation is successful', () async {
+    test('should return created if creation is successful', () async {
       final displayName = 'display name';
       when(_api.registerUser(testEmail, displayName, 'Email', testPassword)).thenAnswer((_) async => SignInResultType.CREATED);
       var result = await _signIn.emailSignUp(testEmail, displayName, testPassword);
