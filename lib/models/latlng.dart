@@ -23,7 +23,7 @@ class LatLng {
   }
 
   int get hashCode {
-    return (latitude * 10000).floor() + (longitude * 10000).floor();
+    return (latitude * 100000).floor() + (longitude * 100000).floor();
   }
 
   factory LatLng.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
