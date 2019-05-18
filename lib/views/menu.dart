@@ -40,33 +40,111 @@ class _MenuState extends State<Menu> {
 
   /// Builds the page [Widget].
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Container(
-        decoration: new BoxDecoration(color: new Color(int.parse(_config.getValue("primary_color"), radix: 16))),
-        child: new Center(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return new Scaffold (
+      body: new Stack(
+        children: <Widget>[
+          _buildBackground(),
+          new Container(
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new Container(
-                    margin: new EdgeInsets.fromLTRB(0.0, _config.getValue("form_submit_margin"), 0.0, 0.0),
-                    child: new RaisedButton(
-                      color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
-                      child: new Text("Map"),
-                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new MapPage(_config, _email))),
-                    )
-                ),
-                new Container(
-                    margin: new EdgeInsets.fromLTRB(0.0, _config.getValue("form_submit_margin"), 0.0, 0.0),
-                    child: new RaisedButton(
-                      color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
-                      child: new Text("Transfer"),
-                      onPressed: () => Navigator.push(context, new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config))),
-                    )
-                )
+                _buildLeftColumn(),
+                _buildRightColumn(),
               ],
             )
-        )
+          )
+        ]
       )
+    );
+  }
+
+  /// Builds the background, containing a single image
+  Widget _buildBackground() {
+    return new Container(
+      child: Image.asset(
+        _config.getValue('home_screen_img'),
+        height: MediaQuery.of(context).size.height,
+        fit: BoxFit.fitHeight,
+        alignment: Alignment(0.5, 0), // TODO Possibly change when true image is found
+      ),
+    );
+  }
+
+  /// Builds left column for the menu
+  ///   Contains name for the frog
+  ///   Contains list of recent transfers
+  Widget _buildLeftColumn() {
+    return new Expanded(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          new Text(
+            'NAME', // TODO Replace with name of user's frog
+            style: TextStyle(fontSize: 30.0),
+          ),
+          Container(height: 20),
+          SizedBox( // Vertical ListView
+            height: 300,
+            child: _buildTransfers(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Builds the list of transfers of user's frog
+  Widget _buildTransfers() {
+    return MediaQuery.removePadding( // Add this to get rid of weird header inherit with ListView
+      context: context,
+      removeTop: true,
+      // TODO Change to building recent transfers
+      child: ListView.builder(
+        itemCount: 21,
+        itemBuilder: (context, i) {
+          if (i.isEven) return Divider();
+          return Container(
+            width: 50,
+            height: 25,
+            alignment: Alignment.center,
+            child: Text('Test $i'),
+          );
+        },
+      )
+    );
+  }
+
+  /// Builds the column on the right side of the home screen
+  ///   Contains routing buttons:
+  ///     Map - Goes to the map
+  ///     Transfer - Goes to the transfer screen
+  Widget _buildRightColumn() {
+    return new Expanded(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          _buildRouteBtn('Map', new MaterialPageRoute(builder: (context) => new MapPage(_config, _email))),
+          _buildRouteBtn('Transfer', new MaterialPageRoute(builder: (context) => new TransferMenuPage(_email, _config))),
+        ],
+      )
+    );
+  }
+
+  /// Builds a button to handle routing to a different page
+  ///   name - The text on the button
+  ///   page - The page to route to
+  Widget _buildRouteBtn(String name, PageRoute route) {
+    return new Container(
+      margin: new EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 40.0),
+      child: new SizedBox(
+        width: double.infinity,
+        child: new RaisedButton(
+          color: new Color(int.parse(_config.getValue("form_button_background"), radix: 16)),
+          splashColor: Colors.lightGreen,
+          child: new Text(name, style: TextStyle(fontSize: 20.0)),
+          onPressed: () => Navigator.push(context, route),
+        ),
+      ),
     );
   }
 }
