@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -15,6 +17,7 @@ type handlerEntry struct {
 }
 
 var handlerTable []handlerEntry
+var graph DGraph
 
 func makeURLRegex(url string) string {
 	// syntax for url params is {}
@@ -50,8 +53,19 @@ func userHandler(w http.ResponseWriter, r *http.Request, args ...string) {
 }
 
 func main() {
-	register("/users/{}", userHandler)
+	args := os.Args[1:]
+	graph = MakeClient()
+	if len(args) == 1 && args[0] == "initdb" {
+		err := graph.CreateSchema()
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("Schema Created")
+		}
+	} else {
+		register("/users/{}", userHandler)
 
-	http.HandleFunc("/", globalHandler)
-	http.ListenAndServe(":8080", nil)
+		http.HandleFunc("/", globalHandler)
+		log.Fatal(http.ListenAndServe(":5000", nil))
+	}
 }
