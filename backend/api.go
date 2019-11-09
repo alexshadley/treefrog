@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
 	"strings"
+	"github.com/alexshadley/treefrog/database"
 )
 
 type handler = func(http.ResponseWriter, *http.Request, ...string)
@@ -17,7 +19,7 @@ type handlerEntry struct {
 }
 
 var handlerTable []handlerEntry
-var graph DGraph
+var graph database.Dgraph
 
 func makeURLRegex(url string) string {
 	// syntax for url params is {}
@@ -54,7 +56,7 @@ func userHandler(w http.ResponseWriter, r *http.Request, args ...string) {
 
 func main() {
 	args := os.Args[1:]
-	graph = MakeClient()
+	graph = database.MakeClient()
 	if len(args) == 1 && args[0] == "initdb" {
 		err := graph.CreateSchema()
 		if err != nil {
@@ -66,6 +68,10 @@ func main() {
 		register("/users/{}", userHandler)
 
 		http.HandleFunc("/", globalHandler)
+		user, _ := graph.GetUser("eric@ku.edu")
+		str, _ := json.Marshal(user)
+		fmt.Println(string(str))
+
 		log.Fatal(http.ListenAndServe(":5000", nil))
 	}
 }
