@@ -72,22 +72,20 @@ func (g Dgraph) GetUser(email string) (model.User, error) {
 
 	res := userReturn{}
 	err = json.Unmarshal(resp.GetJson(), &res)
-	fmt.Println(resp.GetJson())
 	if err != nil {
-		fmt.Println(err)
 		return model.User{}, err
 	}
 	return res.ToUser(), err
 }
 
-func MakeClient() Dgraph {
+func MakeClient() (Dgraph, error) {
 	dialOpts := append([]grpc.DialOption{},
 			grpc.WithInsecure(),
 			grpc.WithDefaultCallOptions(grpc.UseCompressor(gzip.Name)))
 	d, err := grpc.Dial("localhost:9080", dialOpts...)
 	if err != nil {
-		fmt.Println("Error opening dgraph connection")
+		return Dgraph{}, err
 	}
 
-	return Dgraph{graph: dgo.NewDgraphClient(api.NewDgraphClient(d))}
+	return Dgraph{graph: dgo.NewDgraphClient(api.NewDgraphClient(d))}, nil
 }

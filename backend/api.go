@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -56,7 +55,13 @@ func userHandler(w http.ResponseWriter, r *http.Request, args ...string) {
 
 func main() {
 	args := os.Args[1:]
-	graph = database.MakeClient()
+	var err error
+	graph, err = database.MakeClient()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	if len(args) == 1 && args[0] == "initdb" {
 		err := graph.CreateSchema()
 		if err != nil {
@@ -68,10 +73,6 @@ func main() {
 		register("/users/{}", userHandler)
 
 		http.HandleFunc("/", globalHandler)
-		user, _ := graph.GetUser("eric@ku.edu")
-		str, _ := json.Marshal(user)
-		fmt.Println(string(str))
-
 		log.Fatal(http.ListenAndServe(":5000", nil))
 	}
 }
