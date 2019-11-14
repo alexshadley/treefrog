@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strings"
 	"github.com/alexshadley/treefrog/database"
+	"github.com/alexshadley/treefrog/model"
 )
 
 type handler = func(http.ResponseWriter, *http.Request, ...string)
@@ -18,7 +19,6 @@ type handlerEntry struct {
 }
 
 var handlerTable []handlerEntry
-var graph database.Dgraph
 
 func makeURLRegex(url string) string {
 	// syntax for url params is {}
@@ -55,15 +55,18 @@ func userHandler(w http.ResponseWriter, r *http.Request, args ...string) {
 
 func main() {
 	args := os.Args[1:]
-	var err error
-	graph, err = database.MakeClient()
+	client, err := database.NewOrientClient("localhost:2480", "treefrog", "root", "password")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	if len(args) == 1 && args[0] == "initdb" {
-		err := graph.CreateSchema()
+		classes := make([]interface{}, 0)
+		classes = append(classes, model.User{})
+		classes = append(classes, model.Frog{})
+
+		err := database.CreateSchema(classes, client)
 		if err != nil {
 			fmt.Println(err)
 		} else {
