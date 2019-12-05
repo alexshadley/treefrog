@@ -55,7 +55,7 @@ func userHandler(w http.ResponseWriter, r *http.Request, args ...string) {
 
 func main() {
 	args := os.Args[1:]
-	client, err := database.NewOrientClient("localhost:2480", "treefrog", "root", "password")
+	client, err := database.NewOrientClient("localhost:2480", "treefrog", "root", "indyxena0998")
 	if err != nil {
 		fmt.Println(err)
 		return

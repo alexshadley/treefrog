@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"math/big"
 	"reflect"
 	"strings"
@@ -9,6 +10,11 @@ import (
 )
 
 type PropertyType string
+
+type session struct {
+	vertices []reflect.Value
+	client OrientClient
+}
 
 const (
 	BOOLEAN PropertyType = "BOOLEAN"
@@ -27,6 +33,10 @@ const (
 	LINKSET = "LINKSET"
 	LINKMAP = "LINKMAP"
 )
+
+func CreateSession(client OrientClient) session {
+	return session{client: client}
+}
 
 func goTypeToValueType(propType reflect.Type) (PropertyType, error) {
 	var int16Val int16
@@ -63,7 +73,6 @@ func goTypeToValueType(propType reflect.Type) (PropertyType, error) {
 		case reflect.TypeOf(binaryVal):
 			return BINARY, nil
 		default:
-			// reflect.TypeOf(false) is just an arbitrary return value
 			return "", errors.New("Invalid type")
 	}
 }
@@ -87,30 +96,6 @@ func goTypeToLinkType(propType reflect.Type) (PropertyType, reflect.Type, error)
 			return "", reflect.TypeOf(false), errors.New("Invalid link type")
 	}
 }
-
-/*func linkTypeToGoType(propType PropertyType, linkName string, classes map[string]reflect.Type) (reflect.Type, error) {
-	linkStruct, ok := classes[linkName]
-	if !ok {
-		// reflect.TypeOf(false) is just an arbitrary return value
-		return reflect.TypeOf(false), errors.New("Invalid type link type " + linkName + ".")
-	}
-
-	linkType := reflect.PtrTo(reflect.TypeOf(linkStruct))
-
-	switch propType {
-		case LINK:
-			return linkType, nil
-		case LINKLIST:
-			return reflect.SliceOf(linkType), nil
-		case LINKSET:
-			return reflect.MapOf(linkType, reflect.TypeOf(false)), nil
-		case LINKMAP:
-			return reflect.MapOf(reflect.TypeOf(""), linkType), nil
-		default:
-			// reflect.TypeOf(false) is just an arbitrary return value
-			return reflect.TypeOf(false), errors.New("Invalid property type " + string(propType))
-	}
-}*/
 
 func paramToDbProperty(param string) (string, error) {
 	param = strings.ToLower(param)
@@ -214,4 +199,97 @@ func CreateSchema(classes []interface{}, client OrientClient) (error) {
 
 	err = makeLinkTypes(classes, client)
 	return err
+}
+
+func (s *session) CreateVertex(v interface{}) {
+	s.vertices = append(s.vertices, reflect.ValueOf(v))
+}
+
+func (s *session) indexOf(v reflect.Value) int {
+	for i := 0; i < len(s.vertices); i++ {
+		if reflect.DeepEqual(v.Interface(), s.vertices[i].Interface()) {
+			return i
+		}
+	}
+
+	return -1
+}
+
+/* NOTE: This assumes there are no reference cycles */
+func (s *session) commitVertex(value reflect.Value, visited []bool) string {
+	visited[s.indexOf(value)] = true
+	t := value.Type()
+	jsonString := "{"
+
+	for i := 0; i < value.NumField(); i++ {
+		field := value.Field(i)
+		name := t.Field(i).Name
+		kind := field.Kind()
+
+		if i > 0 {
+			jsonString += ", "
+		}
+		jsonString += "\"" + name + "\": "
+
+		if kind == reflect.Ptr {
+			rid := s.commitVertex(field.Elem(), visited)
+			jsonString += rid
+		} else if kind == reflect.Map && field.Elem().Kind() != reflect.Bool {
+			iter := field.MapRange()
+			mapString := "{"
+			for end := iter.Next(); end; {
+				rid := s.commitVertex(iter.Value().Elem(), visited)
+				if len(mapString) > 1 {
+					mapString += ", "
+				}
+				mapString += "\"" + iter.Key().String() + "\": " + rid
+			}
+			jsonString += mapString + "}"
+		} else if kind == reflect.Slice || kind == reflect.Array {
+			listString := "["
+			for i := 0; i < field.Len(); i++ {
+				rid := s.commitVertex(field.Index(i).Elem(), visited)
+				if len(listString) > 1 {
+					listString += ", "
+				}
+				listString += rid
+			}
+			jsonString += listString + "]"
+		} else if kind == reflect.Map {
+			setString := "["
+			iter := field.MapRange()
+			for end := iter.Next(); end; {
+				rid := s.commitVertex(iter.Key().Elem(), visited)
+				if len(setString) > 1 {
+					setString += ", "
+				}
+				setString += rid
+			}
+			jsonString += setString + "]"
+		} else {
+			if field.Type().Kind() == reflect.String {
+				jsonString += "\"" + fmt.Sprint(field) + "\""
+			} else {
+				jsonString += fmt.Sprint(field)
+			}
+		}
+	}
+	jsonString += "}"
+
+	rid, err := s.client.CreateVertex(t.Name(), jsonString)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return rid
+}
+
+/* NOTE: This assumes there are no reference cycles */
+func (s *session) Commit() {
+	visited := make([]bool, len(s.vertices), len(s.vertices))
+	for i := 0; i < len(s.vertices); i++ {
+		if !visited[i] {
+			s.commitVertex(s.vertices[i], visited)
+		}
+	}
 }

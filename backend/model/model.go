@@ -8,8 +8,8 @@ type User struct {
 	LastName string "?notnull=true&mandatory=true"
 	Email string "?notnull=true&mandatory=true"
 	Password string "?notnull=true&mandatory=true"
+	Frog *Frog "?notnull=true&mandatory=true"
 	LoginMethod string "?notnull=true&mandatory=true"
-	Frog Frog "?notnull=true&mandatory=true"
 }
 
 type Frog struct {

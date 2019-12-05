@@ -6,6 +6,8 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -16,6 +18,8 @@ type OrientClient struct {
 	Password string
 	Database string
 }
+
+var ridRegex *regexp.Regexp = regexp.MustCompile("\"@rid\":\"([#:\\d]+)\"")
 
 func (o *OrientClient) makeReq(method, url string, body io.Reader, successResp int) (*http.Response, error) {
 	req, err := http.NewRequest(method, url, body)
@@ -118,24 +122,25 @@ func (o *OrientClient) AddProperty(class, name string, propertyType PropertyType
 		command += ")"
 	}
 
-	fmt.Println(command)
 	url := fmt.Sprintf("%s/command/%s/sql/%s", o.BaseUrl, o.Database, command)
 	_, err := o.makeReq("POST", url, nil, 200)
 	return err
 }
 
-func (o *OrientClient) CreateVertex(class string, properties string) error {
+func findRid(response string) string {
+	return ridRegex.FindStringSubmatch(response)[1]
+}
+
+func (o *OrientClient) CreateVertex(class string, properties string) (string, error) {
 	command := fmt.Sprintf("CREATE VERTEX %s CONTENT %s", class, properties)
-	fmt.Println(command)
-	url := fmt.Sprintf("%s/command/%s/sql/%s", o.BaseUrl, o.Database, command)
-	resp, err := o.makeReq("POST", url, nil, 200)
+	cmdUrl := fmt.Sprintf("%s/command/%s/sql/%s", o.BaseUrl, o.Database, url.PathEscape(command))
+	resp, err := o.makeReq("POST", cmdUrl, nil, 200)
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	fmt.Println(string(body))
-	return err
+	return findRid(string(body)), err
 }
