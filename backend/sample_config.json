@@ -1,0 +1,6 @@
+{
+    "DbUsername": "root",
+    "DbPassword": "password",
+    "Database": "treefrog",
+    "DbUrl": "localhost:2480"
+}

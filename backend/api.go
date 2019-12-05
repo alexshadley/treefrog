@@ -62,7 +62,14 @@ func userHandler(w http.ResponseWriter, r *http.Request, args ...string) {
 
 func main() {
 	args := os.Args[1:]
-	client, err := orient.NewOrientClient("localhost:2480", "treefrog", "root", "password")
+	config, err := LoadConfig()
+	
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	client, err := orient.NewOrientClient(config.DbUrl, config.Database, config.DbUsername, config.DbPassword)
 	if err != nil {
 		fmt.Println(err)
 		return

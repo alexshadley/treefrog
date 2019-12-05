@@ -11,3 +11,5 @@ build/
 res/config.json
 
 .idea/workspace.xml
+
+backend/config.json
