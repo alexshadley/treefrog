@@ -215,9 +215,72 @@ func (s *session) indexOf(v reflect.Value) int {
 	return -1
 }
 
+func (s *session) commitPtr(m reflect.Value, rids []string) string {
+	rid := rids[s.indexOf(m.Elem())]
+	if rid == "" {
+		rid = s.commitVertex(m.Elem(), rids)
+	}
+
+	return rid
+}
+
+func (s *session) commitMap(m reflect.Value, rids []string) string {
+	iter := m.MapRange()
+	mapString := "{"
+	for end := iter.Next(); end; {
+		rid := rids[s.indexOf(iter.Value().Elem())]
+
+		if rid == "" {
+			rid = s.commitVertex(iter.Value().Elem(), rids)
+		}
+		
+		if len(mapString) > 1 {
+			mapString += ", "
+		}
+		mapString += "\"" + iter.Key().String() + "\": " + rid
+	}
+	return mapString + "}"
+}
+
+func (s* session) commitList(l reflect.Value, rids []string) string {
+	listString := "["
+	for i := 0; i < l.Len(); i++ {
+		rid := rids[s.indexOf(l.Index(i).Elem())]
+		if rid == "" {
+			rid = s.commitVertex(l.Index(i).Elem(), rids)
+		}
+		
+		if len(listString) > 1 {
+			listString += ", "
+		}
+		listString += rid
+	}
+	return listString + "]"
+}
+
+func (s *session) commitSet(set reflect.Value, rids []string) string {
+	setString := "["
+	iter := set.MapRange()
+	for end := iter.Next(); end; {
+		rid := rids[s.indexOf(iter.Key().Elem())]
+		if rid == "" {
+			s.commitVertex(iter.Key().Elem(), rids)
+		}
+
+		if len(setString) > 1 {
+			setString += ", "
+		}
+		setString += rid
+	}
+	return setString + "]"
+}
+
 /* NOTE: This assumes there are no reference cycles */
-func (s *session) commitVertex(value reflect.Value, visited []bool) string {
-	visited[s.indexOf(value)] = true
+func (s *session) commitVertex(value reflect.Value, rids []string) string {
+	if index := s.indexOf(value); rids[index] != "" {
+		return rids[index]
+	}
+
 	t := value.Type()
 	jsonString := "{"
 
@@ -231,47 +294,25 @@ func (s *session) commitVertex(value reflect.Value, visited []bool) string {
 		}
 		jsonString += "\"" + name + "\": "
 
-		if kind == reflect.Ptr {
-			rid := s.commitVertex(field.Elem(), visited)
-			jsonString += rid
-		} else if kind == reflect.Map && field.Elem().Kind() != reflect.Bool {
-			iter := field.MapRange()
-			mapString := "{"
-			for end := iter.Next(); end; {
-				rid := s.commitVertex(iter.Value().Elem(), visited)
-				if len(mapString) > 1 {
-					mapString += ", "
+		switch kind {
+			case reflect.Ptr:
+				jsonString += s.commitPtr(field, rids)
+			case reflect.Map:
+				if field.Elem().Kind() != reflect.Bool {
+					jsonString += s.commitMap(field, rids)
+				} else {
+					jsonString += s.commitSet(field, rids)
 				}
-				mapString += "\"" + iter.Key().String() + "\": " + rid
-			}
-			jsonString += mapString + "}"
-		} else if kind == reflect.Slice || kind == reflect.Array {
-			listString := "["
-			for i := 0; i < field.Len(); i++ {
-				rid := s.commitVertex(field.Index(i).Elem(), visited)
-				if len(listString) > 1 {
-					listString += ", "
+			case reflect.Array:
+				fallthrough
+			case reflect.Slice:
+				jsonString += s.commitList(field, rids)
+			default:
+				if field.Type().Kind() == reflect.String {
+					jsonString += "\"" + fmt.Sprint(field) + "\""
+				} else {
+					jsonString += fmt.Sprint(field)
 				}
-				listString += rid
-			}
-			jsonString += listString + "]"
-		} else if kind == reflect.Map {
-			setString := "["
-			iter := field.MapRange()
-			for end := iter.Next(); end; {
-				rid := s.commitVertex(iter.Key().Elem(), visited)
-				if len(setString) > 1 {
-					setString += ", "
-				}
-				setString += rid
-			}
-			jsonString += setString + "]"
-		} else {
-			if field.Type().Kind() == reflect.String {
-				jsonString += "\"" + fmt.Sprint(field) + "\""
-			} else {
-				jsonString += fmt.Sprint(field)
-			}
 		}
 	}
 	jsonString += "}"
@@ -281,15 +322,17 @@ func (s *session) commitVertex(value reflect.Value, visited []bool) string {
 		fmt.Println(err)
 	}
 
+	rids[s.indexOf(value)] = rid
 	return rid
 }
 
 /* NOTE: This assumes there are no reference cycles */
 func (s *session) Commit() {
-	visited := make([]bool, len(s.vertices), len(s.vertices))
+	rids := make([]string, len(s.vertices), len(s.vertices))
 	for i := 0; i < len(s.vertices); i++ {
-		if !visited[i] {
-			s.commitVertex(s.vertices[i], visited)
+		if rids[i] == "" {
+			s.commitVertex(s.vertices[i], rids)
 		}
+		fmt.Println(rids)
 	}
 }

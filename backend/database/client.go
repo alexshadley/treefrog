@@ -142,5 +142,5 @@ func (o *OrientClient) CreateVertex(class string, properties string) (string, er
 		return "", err
 	}
 
-	return findRid(string(body)), err
+	return findRid(string(body)), nil
 }
