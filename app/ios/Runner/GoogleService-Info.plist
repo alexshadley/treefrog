@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>756240636959-ataibulua8ktm7h18350v46p0ueov0b3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.756240636959-ataibulua8ktm7h18350v46p0ueov0b3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDxoTWXBe1LVhJyE5K_2f92480MwneLcD4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>756240636959</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.github.alexshadley.leapfrog</string>
+	<key>PROJECT_ID</key>
+	<string>leapfrog-54624</string>
+	<key>STORAGE_BUCKET</key>
+	<string>leapfrog-54624.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:756240636959:ios:ced1df56d3d144b2</string>
+	<key>DATABASE_URL</key>
+	<string>https://leapfrog-54624.firebaseio.com</string>
+</dict>
+</plist>
