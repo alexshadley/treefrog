@@ -170,7 +170,7 @@ func makeValueTypes(classes []interface{}, client Client) error {
 				continue
 			}
 
-			err = client.AddProperty(class.Name(), class.Field(j).Name, string(propType), "", tagMap)
+			err = client.CreateProperty(class.Name(), class.Field(j).Name, string(propType), "", tagMap)
 			if err != nil {
 				return err
 			}
@@ -197,7 +197,7 @@ func makeLinkTypes(classes []interface{}, client Client) (error) {
 				continue
 			}
 
-			err = client.AddProperty(class.Name(), class.Field(j).Name, string(propType), linkType.Name(), tagMap)
+			err = client.CreateProperty(class.Name(), class.Field(j).Name, string(propType), linkType.Name(), tagMap)
 			if err != nil {
 				return err
 			}

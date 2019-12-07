@@ -19,9 +19,9 @@ type OrientClient struct {
 	Database string
 }
 
-var ridRegex *regexp.Regexp = regexp.MustCompile("\"@rid\":\"([#:\\d]+)\"")
+var ridRegex *regexp.Regexp = regexp.MustCompile("\"@rid\":? \"([#:\\d]+)\"")
 
-func NewOrientClient(baseurl, database, username, password string) (OrientClient, error) {
+func NewClient(baseurl, database, username, password string) (OrientClient, error) {
 	if !strings.HasPrefix(baseurl, "http://") {
 		baseurl = "http://" + baseurl
 	}
@@ -29,10 +29,7 @@ func NewOrientClient(baseurl, database, username, password string) (OrientClient
 	client := http.Client{}
 
 	url := fmt.Sprintf("%s/connect/%s", baseurl, database)
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return OrientClient{}, err
-	}
+	req, _ := http.NewRequest("GET", url, nil)
 
 	req.SetBasicAuth(username, password)
 	resp, err := client.Do(req)
@@ -80,7 +77,7 @@ func (o OrientClient) AlterClass(name, attribute, attributeValue string) error {
 	return err
 }
 
-func (o OrientClient) AddProperty(class, name string, propertyType string, linkType string, constraints map[string]string) error {
+func (o OrientClient) CreateProperty(class, name string, propertyType string, linkType string, constraints map[string]string) error {
 	isContainer := strings.HasPrefix(propertyType, "LINK")
 	if isContainer && linkType == "" {
 		return errors.New("Must supply linkType for container-type properties")
@@ -111,7 +108,11 @@ func (o OrientClient) AddProperty(class, name string, propertyType string, linkT
 }
 
 func (o OrientClient) CreateVertex(class string, properties string) (string, error) {
-	command := fmt.Sprintf("CREATE VERTEX %s CONTENT %s", class, properties)
+	command := fmt.Sprintf("CREATE VERTEX %s", class)
+	if properties != "" {
+		command += " CONTENT " + properties
+	}
+	
 	cmdUrl := fmt.Sprintf("%s/command/%s/sql/%s", o.BaseUrl, o.Database, url.PathEscape(command))
 	resp, err := o.makeReq("POST", cmdUrl, nil, 200)
 
@@ -125,7 +126,11 @@ func (o OrientClient) CreateVertex(class string, properties string) (string, err
 }
 
 func (o OrientClient) CreateEdge(class string, from string, to string, properties string) (string, error) {
-	command := fmt.Sprintf("CREATE EDGE %s FROM %s TO %s CONTENT %s", class, from, to, properties)
+	command := fmt.Sprintf("CREATE EDGE %s FROM %s TO %s", class, from, to)
+	if properties != "" {
+		command += " CONTENT " + properties
+	}
+
 	cmdUrl := fmt.Sprintf("%s/command/%s/sql/%s", o.BaseUrl, o.Database, url.PathEscape(command))
 	resp, err := o.makeReq("POST", cmdUrl, nil, 200)
 

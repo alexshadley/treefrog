@@ -69,7 +69,7 @@ func main() {
 		return
 	}
 
-	client, err := orient.NewOrientClient(config.DbUrl, config.Database, config.DbUsername, config.DbPassword)
+	client, err := orient.NewClient(config.DbUrl, config.Database, config.DbUsername, config.DbPassword)
 	if err != nil {
 		fmt.Println(err)
 		return
